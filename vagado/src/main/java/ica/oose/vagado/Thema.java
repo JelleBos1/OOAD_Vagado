@@ -4,9 +4,11 @@ import java.util.ArrayList;
 
 public class Thema {
 
+    public int id;
     public String naam;
 
-    public Thema(String naam) {
+    public Thema(int id, String naam) {
+        this.id = id;
         this.naam = naam;
     }
 
