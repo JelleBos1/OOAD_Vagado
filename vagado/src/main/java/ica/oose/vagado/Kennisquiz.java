@@ -93,6 +93,79 @@ public class Kennisquiz {
 
 ///////////////////////////////////////////////////////////////////////////////
 
+        ArrayList<String> vraag16FouteAntwoorden = new ArrayList<>();
+        vraag16FouteAntwoorden.add("NBA");
+        vraag16FouteAntwoorden.add("NFL");
+        vraag16FouteAntwoorden.add("NHL");
+
+        ArrayList<String> vraag17Antwoorden = new ArrayList<>();
+        vraag17Antwoorden.add("Major League Baseball");
+
+        ArrayList<String> vraag18Antwoorden = new ArrayList<>();
+        vraag18Antwoorden.add("Werper");
+        vraag18Antwoorden.add("Pitcher");
+
+        ArrayList<String> vraag19Antwoorden = new ArrayList<>();
+        vraag19Antwoorden.add("3");
+        vraag19Antwoorden.add("Drie");
+
+        ArrayList<String> vraag20FouteAntwoorden = new ArrayList<>();
+        vraag20FouteAntwoorden.add("7");
+        vraag20FouteAntwoorden.add("8");
+        vraag20FouteAntwoorden.add("11");
+
+        ArrayList<String> vraag21Antwoorden = new ArrayList<>();
+        vraag21Antwoorden.add("Aangewezen slagman");
+        vraag21Antwoorden.add("Designated hitter");
+
+        ArrayList<String> vraag22FouteAntwoorden = new ArrayList<>();
+        vraag22FouteAntwoorden.add("2");
+        vraag22FouteAntwoorden.add("4");
+        vraag22FouteAntwoorden.add("5");
+
+        ArrayList<String> vraag23Antwoorden = new ArrayList<>();
+        vraag23Antwoorden.add("Thuisplaat");
+        vraag23Antwoorden.add("Thuis plaat");
+        vraag23Antwoorden.add("Home plate");
+        vraag23Antwoorden.add("Homeplate");
+
+        ArrayList<String> vraag24FouteAntwoorden = new ArrayList<>();
+        vraag24FouteAntwoorden.add("Slaan");
+        vraag24FouteAntwoorden.add("Stelen");
+        vraag24FouteAntwoorden.add("Beuken");
+
+        ArrayList<String> vraag25FouteAntwoorden = new ArrayList<>();
+        vraag25FouteAntwoorden.add("Shutout");
+        vraag25FouteAntwoorden.add("Clean sweep");
+        vraag25FouteAntwoorden.add("Touchdown");
+
+        ArrayList<String> vraag26FouteAntwoorden = new ArrayList<>();
+        vraag26FouteAntwoorden.add("LA Dodgers");
+        vraag26FouteAntwoorden.add("Boston Red Sox");
+        vraag26FouteAntwoorden.add("LA Angels");
+
+        ArrayList<String> vraag27FouteAntwoorden = new ArrayList<>();
+        vraag27FouteAntwoorden.add("Detroit");
+        vraag27FouteAntwoorden.add("Seattle");
+        vraag27FouteAntwoorden.add("Miami");
+
+        ArrayList<String> vraag28FouteAntwoorden = new ArrayList<>();
+        vraag28FouteAntwoorden.add("LA Dodgers");
+        vraag28FouteAntwoorden.add("New York Yankees");
+        vraag28FouteAntwoorden.add("Houston Astros");
+
+        ArrayList<String> vraag29FouteAntwoorden = new ArrayList<>();
+        vraag29FouteAntwoorden.add("Big home run");
+        vraag29FouteAntwoorden.add("Slam dunk");
+        vraag29FouteAntwoorden.add("Hail mary");
+
+        ArrayList<String> vraag30FouteAntwoorden = new ArrayList<>();
+        vraag30FouteAntwoorden.add("Double handed");
+        vraag30FouteAntwoorden.add("Switcher");
+        vraag30FouteAntwoorden.add("Mad man");
+
+///////////////////////////////////////////////////////////////////////////////
+
         ArrayList<String> vraag31Antwoorden = new ArrayList<>();
         vraag31Antwoorden.add("Freddie Mercurie");
         vraag31Antwoorden.add("Freddy Mercurie");
@@ -184,6 +257,21 @@ public class Kennisquiz {
         vragenSportFormule1.add(vraag14);
         vragenSportFormule1.add(vraag15);
 
+        Vraag vraag16 = new MeerkeuzeVraag(16, 2, "Wat is de afkorting van het hoogste professionele honkbal niveau in Noord-Amerika?", "MLB", vraag16FouteAntwoorden);
+        Vraag vraag17 = new OpenVraag(17, 2, "Waarvoor staat de afkorting MLB?", vraag17Antwoorden);
+        Vraag vraag18 = new OpenVraag(18, 2, "Wat is de naam van de speler die de bal naar de slagman gooit?", vraag18Antwoorden);
+        Vraag vraag19 = new OpenVraag(19, 2, "Hoeveel spelers moeten er uit gemaakt worden voordat er gewisseld wordt?", vraag19Antwoorden);
+        Vraag vraag20 = new MeerkeuzeVraag(20, 2, "Hoeveel veldposities zijn er?", "9", vraag20FouteAntwoorden);
+        Vraag vraag21 = new OpenVraag(21, 2, "Hoe heet de slagman die veldspeler als slagman kan vervangen?", vraag21Antwoorden);
+        Vraag vraag22 = new MeerkeuzeVraag(22, 2, "Hoeveel buitenvelders staan er in een veldopstelling", "3", vraag22FouteAntwoorden);
+        Vraag vraag23 = new OpenVraag(23, 2, "Hoe heet het honk waar je als slagman begint en (hopelijk) eindigt?", vraag23Antwoorden);
+        Vraag vraag24 = new MeerkeuzeVraag(24, 2, "Wat mag er niet in honkbal?", "Tackelen", vraag24FouteAntwoorden);
+        Vraag vraag25 = new MeerkeuzeVraag(25, 2, "Hoe heet het wanneer een werper direct naar een honk gooit i.p.v. de thuisplaat?", "Pickoff", vraag25FouteAntwoorden);
+        Vraag vraag26 = new MeerkeuzeVraag(26, 2, "Welk professionele honkbal team heeft specifieke regels over haarlengte en baardgroei voor zijn spelers?", "New York Yankees", vraag26FouteAntwoorden);
+        Vraag vraag27 = new MeerkeuzeVraag(27, 2, "Uit welke stad komt het team de ... Blue Jays?", "Toronto", vraag27FouteAntwoorden);
+        Vraag vraag28 = new MeerkeuzeVraag(28, 2, "Welk team won de World Series in 2019?", "Washington Nationals", vraag28FouteAntwoorden);
+        Vraag vraag29 = new MeerkeuzeVraag(29, 2, "Wat is de naam voor een homerun wanneer alle ander honken bezet zijn?", "Grand Slam", vraag29FouteAntwoorden);
+        Vraag vraag30 = new MeerkeuzeVraag(30, 2, "Wat is de naam voor een slagman die rechts en links kan slaan?", "Switch hitter", vraag30FouteAntwoorden);
 
         Vraag vraag31 = new OpenVraag(31, 3, "Wie was de frontman van Queen?", vraag31Antwoorden);
         Vraag vraag32 = new OpenVraag(32, 3, "Welke zanger had in 1970 een hit met 'Piano Man'?", vraag32Antwoorden);
