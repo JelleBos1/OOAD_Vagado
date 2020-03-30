@@ -9,4 +9,8 @@ public class OpenVraag extends Vraag {
     public OpenVraag(int id, Vragenlijst vragenlijst, String vraag, ArrayList<String> goedeAntwoorden) {
         super(id, vragenlijst, vraag);
     }
+
+    public ArrayList<String> getGoedeAntwoorden() {
+        return goedeAntwoorden;
+    }
 }

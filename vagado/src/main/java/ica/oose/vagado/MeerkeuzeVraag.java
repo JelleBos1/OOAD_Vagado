@@ -10,4 +10,12 @@ public class MeerkeuzeVraag extends Vraag {
     public MeerkeuzeVraag(int id, Vragenlijst vragenlijst, String vraag, String goedeAntwoord, ArrayList<String> fouteAntwoorden) {
         super(id, vragenlijst, vraag);
     }
+
+    public String getGoedeAntwoord() {
+        return goedeAntwoord;
+    }
+
+    public ArrayList<String> getFouteAntwoorden() {
+        return fouteAntwoorden;
+    }
 }

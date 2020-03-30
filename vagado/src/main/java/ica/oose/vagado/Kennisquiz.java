@@ -1,8 +1,8 @@
 package ica.oose.vagado;
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Random;
 import java.util.Scanner;
 
 public class Kennisquiz {
@@ -71,7 +71,32 @@ public class Kennisquiz {
             System.out.println("Id: "+ quizVragen.get(i).getId() + ", " + quizVragen.get(i).getVraag());
             gekozen10vragen.add(quizVragen.get(i));
         }
+
+        //Spel start eerste vraag wordt gegeven
+        ArrayList<Antwoord> gegevenAntwoorden = new ArrayList<>();
+            quizVragen.forEach((vraag) -> {
+                if(vraag instanceof OpenVraag) {
+                    System.out.println(vraag.getVraag());
+//                    for(String foutAntwoord : ((OpenVraag) vraag).getGoedeAntwoorden()) {
+//                        System.out.println(foutAntwoord);
+//                    }
+                    System.out.println(((OpenVraag) vraag).getGoedeAntwoorden().get(0));
+                }
+                else if (vraag instanceof MeerkeuzeVraag) {
+//                    System.out.println(vraag.getVraag());
+//                    System.out.println(((MeerkeuzeVraag) vraag).getGoedeAntwoord());
+//                    for(String foutAntwoord : ((MeerkeuzeVraag) vraag).getFouteAntwoorden()) {
+//                        System.out.println(foutAntwoord);
+//                    }
+                }
+                gegevenAntwoorden.add(new Antwoord(vraag.getId(), scanner.nextLine()));
+            });
+        for (Antwoord antwoord : gegevenAntwoorden) {
+            System.out.println(antwoord.getAntwoord());
+
+        }
     }
+
 
     public void speelSpel(Vragenlijst lijst){
 
