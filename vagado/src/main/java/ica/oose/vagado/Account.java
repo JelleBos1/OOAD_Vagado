@@ -12,4 +12,13 @@ public abstract class Account {
         this.wachtwoord = wachtwoord;
         this.taal = taal;
     }
+
+
+    public String getGebruikersnaam() {
+        return gebruikersnaam;
+    }
+
+    public void setGebruikersnaam(String gebruikersnaam) {
+        this.gebruikersnaam = gebruikersnaam;
+    }
 }

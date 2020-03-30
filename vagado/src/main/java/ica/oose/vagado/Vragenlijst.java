@@ -10,6 +10,10 @@ public class Vragenlijst {
     public int aankoopPrijs;
     ArrayList<Vraag> alleVragen;
 
+    public String getNaam() {
+        return naam;
+    }
+
     public Vragenlijst(int themaId, int vragenlijstId, String naam) {
         this.themaId = themaId;
         this.vragenlijstId = vragenlijstId;

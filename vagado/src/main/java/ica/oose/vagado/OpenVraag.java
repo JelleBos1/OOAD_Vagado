@@ -6,7 +6,7 @@ public class OpenVraag extends Vraag {
 
     private ArrayList<String> goedeAntwoorden;
 
-    public OpenVraag(int id, int vragenlijstId, String vraag, ArrayList<String> goedeAntwoorden) {
-        super(id, vragenlijstId, vraag);
+    public OpenVraag(int id, Vragenlijst vragenlijst, String vraag, ArrayList<String> goedeAntwoorden) {
+        super(id, vragenlijst, vraag);
     }
 }

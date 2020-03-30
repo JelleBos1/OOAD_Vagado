@@ -2,13 +2,22 @@ package ica.oose.vagado;
 
 public abstract class Vraag {
 
+
     private int id;
-    private int vragenlijstId;
+    private Vragenlijst vragenlijst;
     private String vraag;
 
-    public Vraag(int id, int vragenlijstId, String vraag) {
+    public Vraag(int id, Vragenlijst vragenlijst, String vraag) {
         this.id = id;
-        this.vragenlijstId = vragenlijstId;
+        this.vragenlijst = vragenlijst;
         this.vraag = vraag;
+    }
+
+    public String getVraag() {
+        return vraag;
+    }
+
+    public int getId() {
+        return id;
     }
 }
