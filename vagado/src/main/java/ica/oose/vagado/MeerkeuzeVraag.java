@@ -8,7 +8,7 @@ public class MeerkeuzeVraag extends Vraag {
     private ArrayList<String> fouteAntwoorden;
 
     public MeerkeuzeVraag(int id, Vragenlijst vragenlijst, String vraag, String goedeAntwoord, ArrayList<String> fouteAntwoorden) {
-        super(id, vragenlijst, vraag);
+        super(id, vragenlijst, vraag, fouteAntwoorden);
     }
 
     public String getGoedeAntwoord() {

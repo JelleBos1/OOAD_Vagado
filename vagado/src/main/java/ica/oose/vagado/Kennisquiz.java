@@ -1,13 +1,17 @@
 package ica.oose.vagado;
 
-import java.sql.SQLOutput;
+import org.apache.commons.lang3.time.StopWatch;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
+import java.util.concurrent.atomic.AtomicInteger;
+
+import static ica.oose.vagado.Puntentelling.allesGoedMuntenPrijs;
 
 public class Kennisquiz {
 
-    public int speelTijd;
+    public double speelTijd;
     public int aantalGoedeAntwoorden;
     public int behaaldeScore;
     public Vraag huidigeVraag;
@@ -16,13 +20,15 @@ public class Kennisquiz {
     public Thema gekozenThema;
     public ArrayList<Vragenlijst> vragenlijsten;
     public Vragenlijst gekozenVragenlijst;
+    public static int aantalVragen = 10;
 
+    Setup setup = new Setup();
 
     public Kennisquiz() {
 
         Scanner scanner = new Scanner(System.in);
+        StopWatch timer = new StopWatch();
 
-        Setup setup = new Setup();
 
         System.out.println("Welkom bij Vagado " + setup.speler1.getGebruikersnaam());
         System.out.println("Kies een van de volgende thema's: ");
@@ -53,8 +59,17 @@ public class Kennisquiz {
         //Vul quizVragen met alle vragen uit vragenlijst
         if (gekozenVragenlijst.equals("Honkbal"))
             setup.vragenSportHonkbal.forEach((vraag) -> {
-                quizVragen.add(vraag);
-//                System.out.println(vraag.getVraag());
+                if (vraag instanceof OpenVraag){
+                    quizVragen.add(vraag);
+
+//                    System.out.println("vraag: " + vraag.getGoedeAntwoorden());
+                }
+                if (vraag instanceof MeerkeuzeVraag){
+                    quizVragen.add(vraag);
+//                    System.out.println("MPC antwoord: " + vraag.getGoedAntwoord());
+//                    System.out.println(vraag.getFouteAntwoorden());
+                }
+
             });
 
         quizVragen.forEach((vraag) -> System.out.println("Id: " + vraag.getId() + ", vraag: " + vraag.getVraag()));
@@ -67,46 +82,56 @@ public class Kennisquiz {
         Collections.shuffle(gekozenVragen);
 
         //Voeg de eerste 10 geshuffelde vragen toe aan nieuwe lijst gekozen10vragen
-        for (int i = 0; i<10; i++){
+        for (int i = 0; i<aantalVragen; i++){
             System.out.println("Id: "+ quizVragen.get(i).getId() + ", " + quizVragen.get(i).getVraag());
             gekozen10vragen.add(quizVragen.get(i));
         }
 
         //Spel start eerste vraag wordt gegeven
         ArrayList<Antwoord> gegevenAntwoorden = new ArrayList<>();
-            quizVragen.forEach((vraag) -> {
+        AtomicInteger index = new AtomicInteger(1);
+
+        timer.start();
+
+            gekozen10vragen.forEach((vraag) -> {
                 if(vraag instanceof OpenVraag) {
-                    System.out.println(vraag.getVraag());
+                    System.out.println("Vraag " + index + ": " + vraag.getVraag());
+                    gegevenAntwoorden.add(new Antwoord(vraag.getId(), scanner.nextLine()));
+
 //                    for(String foutAntwoord : ((OpenVraag) vraag).getGoedeAntwoorden()) {
 //                        System.out.println(foutAntwoord);
 //                    }
-                    System.out.println(((OpenVraag) vraag).getGoedeAntwoorden().get(0));
+//                    System.out.println(((OpenVraag) vraag).getGoedeAntwoorden().get(0));
+                    index.getAndIncrement();
                 }
-                else if (vraag instanceof MeerkeuzeVraag) {
-//                    System.out.println(vraag.getVraag());
+                if (vraag instanceof MeerkeuzeVraag) {
+                    System.out.println("Vraag " + index + ": " + vraag.getVraag());
+                    gegevenAntwoorden.add(new Antwoord(vraag.getId(), scanner.nextLine()));
+                    index.getAndIncrement();
 //                    System.out.println(((MeerkeuzeVraag) vraag).getGoedeAntwoord());
 //                    for(String foutAntwoord : ((MeerkeuzeVraag) vraag).getFouteAntwoorden()) {
 //                        System.out.println(foutAntwoord);
 //                    }
+//                    System.out.println(((MeerkeuzeVraag) vraag).getGoedeAntwoord());
                 }
-                gegevenAntwoorden.add(new Antwoord(vraag.getId(), scanner.nextLine()));
             });
+
+            timer.stop();
+
         for (Antwoord antwoord : gegevenAntwoorden) {
             System.out.println(antwoord.getAntwoord());
-
         }
+
+        speelTijd = ((double)timer.getTime() / 1000);
+
+        System.out.println("Je hebt er " + speelTijd + " seconden over gedaan.");
+
+        System.out.println("De behaalde score is " + berekenScore(4, speelTijd) + " punten");
+
     }
 
 
     public void speelSpel(Vragenlijst lijst){
-
-    }
-
-    public void startTimer(){
-
-    }
-
-    public void stopTimer() {
 
     }
 
@@ -135,6 +160,20 @@ public class Kennisquiz {
     }
 
     public void slaAntwoordOp(String input, Vraag vraag){
+
+    }
+
+    public int berekenScore(int aantalGoedeAntwoorden, double speeltijd){
+        if (aantalGoedeAntwoorden == aantalVragen){
+            //Hoog munten op
+            setup.speler1.voegMuntenToe(allesGoedMuntenPrijs);
+        }
+        if (aantalGoedeAntwoorden * speeltijd > 100){
+            behaaldeScore = 100;
+        }
+
+        behaaldeScore = 100;
+        return behaaldeScore;
 
     }
 }

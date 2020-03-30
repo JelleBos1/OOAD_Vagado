@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Setup {
 
-    Account speler1 = new Speler("speler1", "wachtwoord", new Taal("Nederlands"));
+    Speler speler1 = new Speler("speler1", "wachtwoord", new Taal("Nederlands"));
 
     ArrayList<Thema> themas = new ArrayList<>();
     ArrayList<Vragenlijst> vragenlijstenSport = new ArrayList<>();

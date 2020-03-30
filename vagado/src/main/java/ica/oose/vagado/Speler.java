@@ -18,8 +18,8 @@ public class Speler extends Account {
         this.munten = munten;
     }
 
-    public void voegMuntenToe(){
-
+    public void voegMuntenToe(int munten){
+        this.munten += munten;
     }
 
     public void koppelVragenlijstAanSpeler(Vragenlijst vragenlijst){
