@@ -15,6 +15,7 @@ public class Kennisquiz {
     public int aantalGoedeAntwoorden;
     public int behaaldeScore;
     public Vraag huidigeVraag;
+    public Speler speler;
     public ArrayList<Vraag> quizvragen;
     public ArrayList<Thema> themas;
     public Thema gekozenThema;
@@ -28,6 +29,16 @@ public class Kennisquiz {
 
         Scanner scanner = new Scanner(System.in);
         StopWatch timer = new StopWatch();
+
+        VraagInitialisatie vi = new VraagInitialisatie();
+        themas = vi.setThemas();
+        speler = vi.setSpeler();
+        vragenlijsten = vi.setVragenlijsten();
+
+        System.out.println(speler.getGebruikersnaam());
+        System.out.println("--------------------------------------------------------------------------");
+        vragenlijsten.forEach((vragenlijst) -> System.out.println("Vragenlijst: " + vragenlijst.));
+        System.out.println("--------------------------------------------------------------------------");
 
 
         System.out.println("Welkom bij Vagado " + setup.speler1.getGebruikersnaam());
