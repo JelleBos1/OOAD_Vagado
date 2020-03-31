@@ -128,6 +128,11 @@ public class Kennisquiz {
 
         System.out.println("De behaalde score is " + berekenScore(4, speelTijd) + " punten");
 
+        // setHighscore
+        setup.bezit1.getHighscore();
+
+
+
     }
 
 
@@ -164,16 +169,14 @@ public class Kennisquiz {
     }
 
     public int berekenScore(int aantalGoedeAntwoorden, double speeltijd){
+        int behaaldeScore = 0;
         if (aantalGoedeAntwoorden == aantalVragen){
-            //Hoog munten op
-            setup.speler1.voegMuntenToe(allesGoedMuntenPrijs);
+            setup.speler1.voegMuntenToe(allesGoedMuntenPrijs); // hoog munten op
+            behaaldeScore += 50;       // bonus alle vragen goed
         }
-        if (aantalGoedeAntwoorden * speeltijd > 100){
-            behaaldeScore = 100;
-        }
+        behaaldeScore += aantalGoedeAntwoorden * 10; // punten berekening
+        behaaldeScore += (int)(100-speeltijd); //bonuspunten speeltijd
 
-        behaaldeScore = 100;
         return behaaldeScore;
-
     }
 }

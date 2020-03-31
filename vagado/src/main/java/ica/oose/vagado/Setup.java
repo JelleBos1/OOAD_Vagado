@@ -14,6 +14,14 @@ public class Setup {
     ArrayList<Vraag> vragenSportHonkbal = new ArrayList<>();
     ArrayList<Vraag> vragenMuziekAlgemeen = new ArrayList<>();
 
+
+    Vragenlijst vragenlijstSportFormule1;
+    Vragenlijst vragenlijstSportHonkbal;
+    Vragenlijst vragenlijstMuziekAlgemeen;
+
+    Bezit bezit1 = new Bezit(0, java.time.LocalDate.now(), speler1.getGebruikersnaam(), vragenlijstSportFormule1);
+    Bezit bezit2 = new Bezit(0, java.time.LocalDate.now(), speler1.getGebruikersnaam(), vragenlijstSportHonkbal);
+
     public Setup() {
 
         Thema sport = new Thema(1, "Sport");
@@ -21,9 +29,9 @@ public class Setup {
         themas.add(sport);
         themas.add(muziek);
 
-        Vragenlijst vragenlijstSportFormule1 = new Vragenlijst(1, 1, "Formule 1");
-        Vragenlijst vragenlijstSportHonkbal = new Vragenlijst(1, 2, "Honkbal");
-        Vragenlijst vragenlijstMuziekAlgemeen = new Vragenlijst(2, 3, "Algemeen");
+        vragenlijstSportFormule1 = new Vragenlijst(1, 1, "Formule 1");
+        vragenlijstSportHonkbal = new Vragenlijst(1, 2, "Honkbal");
+        vragenlijstMuziekAlgemeen = new Vragenlijst(2, 3, "Algemeen");
 
         vragenlijstenSport.add(vragenlijstSportFormule1);
         vragenlijstenSport.add(vragenlijstSportHonkbal);
