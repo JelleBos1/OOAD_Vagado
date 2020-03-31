@@ -19,8 +19,8 @@ public class Setup {
     Vragenlijst vragenlijstSportHonkbal;
     Vragenlijst vragenlijstMuziekAlgemeen;
 
-    Bezit bezit1 = new Bezit(0, java.time.LocalDate.now(), speler1.getGebruikersnaam(), vragenlijstSportFormule1);
-    Bezit bezit2 = new Bezit(0, java.time.LocalDate.now(), speler1.getGebruikersnaam(), vragenlijstSportHonkbal);
+//    Bezit bezit1 = new Bezit(0, java.time.LocalDate.now(), speler1.getGebruikersnaam(), vragenlijstSportFormule1);
+//    Bezit bezit2 = new Bezit(0, java.time.LocalDate.now(), speler1.getGebruikersnaam(), vragenlijstSportHonkbal);
 
     public Setup() {
 

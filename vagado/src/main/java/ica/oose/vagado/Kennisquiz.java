@@ -129,7 +129,7 @@ public class Kennisquiz {
         System.out.println("De behaalde score is " + berekenScore(4, speelTijd) + " punten");
 
         // setHighscore
-        setup.bezit1.getHighscore();
+//        setup.bezit1.getHighscore();
 
 
 

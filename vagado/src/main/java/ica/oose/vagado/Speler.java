@@ -3,14 +3,14 @@ package ica.oose.vagado;
 public class Speler extends Account {
 
     private int munten;
-    private Setup setup = new Setup();
+//    private Setup setup = new Setup();
 
 
     public Speler(String gebruikersnaam, String wachtwoord, Taal taal) {
         super(gebruikersnaam, wachtwoord, taal);
         this.setMunten(100);
-        Bezit bezit1 = new Bezit(0, java.time.LocalDate.now(), gebruikersnaam, setup.vragenlijstSportFormule1);
-        Bezit bezit2 = new Bezit(0, java.time.LocalDate.now(), gebruikersnaam, setup.vragenlijstSportHonkbal);
+//        Bezit bezit1 = new Bezit(0, java.time.LocalDate.now(), gebruikersnaam, setup.vragenlijstSportFormule1);
+//        Bezit bezit2 = new Bezit(0, java.time.LocalDate.now(), gebruikersnaam, setup.vragenlijstSportHonkbal);
     }
 
 
