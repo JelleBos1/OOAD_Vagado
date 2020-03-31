@@ -38,4 +38,8 @@ public abstract class Vraag {
     public ArrayList<String> getFouteAntwoorden() {
         return fouteAntwoorden;
     }
+
+    public Vragenlijst getVragenlijst() {
+        return vragenlijst;
+    }
 }
