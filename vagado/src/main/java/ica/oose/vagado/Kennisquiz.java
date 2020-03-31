@@ -71,34 +71,45 @@ public class Kennisquiz {
 
         quizVragen.forEach((vraag) -> {
 
-            System.out.println("Vraag " + index + ": " + vraag.getVraag());
-            gegevenAntwoorden.add(new Antwoord(vraag.getId(), scanner.nextLine()));
+            if (vraag instanceof OpenVraag){
+                System.out.println("Vraag " + index + ": " + vraag.getVraag());
+                ArrayList<String> antwoorden = ((OpenVraag) vraag).getGoedeAntwoorden();
+                antwoorden.forEach((antwoord) -> System.out.println("Antwoord: " + antwoord.toString()));
+
+                String antwoord = scanner.nextLine();
+                if (antwoorden.contains(antwoord)){
+                    System.out.println("GOED ANTWOORD!");
+                    aantalGoedeAntwoorden++;
+                }
+                else {
+                    System.out.println("Fucking idiot");
+                }
+                gegevenAntwoorden.add(new Antwoord(vraag.getId(), antwoord));
+            }
+
+
+            if (vraag instanceof MeerkeuzeVraag){
+                System.out.println("Vraag " + index + ": " + vraag.getVraag());
+                ArrayList<String> fouteAntwoorden = ((MeerkeuzeVraag) vraag).getFouteAntwoorden();
+                String goedAntwoord = ((MeerkeuzeVraag) vraag).getGoedAntwoord();
+                System.out.println("Goed antwoord: " + goedAntwoord);
+                fouteAntwoorden.forEach((antwoord) -> System.out.println("Fout antwoord: " + antwoord.toString()));
+
+                String antwoord = scanner.nextLine();
+                if (antwoord.equals(goedAntwoord)){
+                    System.out.println("GOED ANTWOORD!");
+                    aantalGoedeAntwoorden++;
+                }
+                else {
+                    System.out.println("Fucking idiot");
+                }
+
+                gegevenAntwoorden.add(new Antwoord(vraag.getId(), antwoord));
+            }
+
 
             index.getAndIncrement();
-            });
-
-//            gekozen10vragen.forEach((vraag) -> {
-//                if(vraag instanceof OpenVraag) {
-//                    System.out.println("Vraag " + index + ": " + vraag.getVraag());
-//                    gegevenAntwoorden.add(new Antwoord(vraag.getId(), scanner.nextLine()));
-//
-////                    for(String foutAntwoord : ((OpenVraag) vraag).getGoedeAntwoorden()) {
-////                        System.out.println(foutAntwoord);
-////                    }
-////                    System.out.println(((OpenVraag) vraag).getGoedeAntwoorden().get(0));
-//                    index.getAndIncrement();
-//                }
-//                if (vraag instanceof MeerkeuzeVraag) {
-//                    System.out.println("Vraag " + index + ": " + vraag.getVraag());
-//                    gegevenAntwoorden.add(new Antwoord(vraag.getId(), scanner.nextLine()));
-//                    index.getAndIncrement();
-////                    System.out.println(((MeerkeuzeVraag) vraag).getGoedeAntwoord());
-////                    for(String foutAntwoord : ((MeerkeuzeVraag) vraag).getFouteAntwoorden()) {
-////                        System.out.println(foutAntwoord);
-////                    }
-////                    System.out.println(((MeerkeuzeVraag) vraag).getGoedeAntwoord());
-//                }
-//            });
+        });
 
             timer.stop();
 
