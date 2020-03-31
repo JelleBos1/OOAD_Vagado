@@ -2,7 +2,7 @@ package ica.oose.vagado;
 
 import java.util.ArrayList;
 
-public class VraagInitialisatie {
+public class SpelInitialisatie {
 
     public ArrayList<Thema> setThemas() {
         ArrayList<Thema> themas = new ArrayList<>();

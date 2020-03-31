@@ -1,13 +1,14 @@
 package ica.oose.vagado;
 
-public class Puntentelling {
+public abstract class Puntentelling {
+
+    static final int ALLES_GOED_MUNTEN_PRIJS = 2;
+    static final int AANTAL_QUIZ_VRAGEN = 10;
 
     private int tijdBonus;
-    static final int allesGoedMuntenPrijs = 2;
-    private int aantalQuizVragen;
+    private int allesGoedBonus;
 
-    public int berekenScore(int aantalGoedeAntwoorden, int speelTijd){
+    public int berekenScore(int aantalGoedeAntwoorden, double speelTijd){
         return 0;
-    };
-
+    }
 }

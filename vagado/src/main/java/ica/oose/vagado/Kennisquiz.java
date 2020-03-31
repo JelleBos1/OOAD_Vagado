@@ -9,7 +9,8 @@ import java.util.Scanner;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
-import static ica.oose.vagado.Puntentelling.allesGoedMuntenPrijs;
+import static ica.oose.vagado.Puntentelling.AANTAL_QUIZ_VRAGEN;
+import static ica.oose.vagado.Puntentelling.ALLES_GOED_MUNTEN_PRIJS;
 
 public class Kennisquiz {
 
@@ -23,7 +24,7 @@ public class Kennisquiz {
     public Thema gekozenThema;
     public ArrayList<Vragenlijst> vragenlijsten;
     public Vragenlijst gekozenVragenlijst;
-    public static int aantalVragen = 10;
+
     List<Vraag> gekozenVragen;
 
     Setup setup = new Setup();
@@ -33,11 +34,11 @@ public class Kennisquiz {
         Scanner scanner = new Scanner(System.in);
         StopWatch timer = new StopWatch();
 
-        VraagInitialisatie vi = new VraagInitialisatie();
-        themas = vi.setThemas();
-        speler = vi.setSpeler();
-        vragenlijsten = vi.setVragenlijsten();
-        quizvragen = vi.setVragen();
+        SpelInitialisatie si = new SpelInitialisatie();
+        themas = si.setThemas();
+        speler = si.setSpeler();
+        vragenlijsten = si.setVragenlijsten();
+        quizvragen = si.setVragen();
 
         System.out.println("Welkom bij Vagado " + speler.getGebruikersnaam());
 
@@ -58,7 +59,7 @@ public class Kennisquiz {
 
         Collections.shuffle(gekozenVragen);
 
-        for (int i = 0; i<aantalVragen; i++){
+        for (int i = 0; i<AANTAL_QUIZ_VRAGEN; i++){
 //            System.out.println("Id: "+ quizVragen.get(i).getId() + ", " + quizVragen.get(i).getVraag());
             quizVragen.add(gekozenVragen.get(i));
         }
@@ -165,14 +166,18 @@ public class Kennisquiz {
 
     public int berekenScore(int aantalGoedeAntwoorden, double speeltijd){
         int behaaldeScore = 0;
-        if (aantalGoedeAntwoorden == aantalVragen){
-            setup.speler1.voegMuntenToe(allesGoedMuntenPrijs); // hoog munten op
-            behaaldeScore += 50;       // bonus alle vragen goed
+        if (aantalGoedeAntwoorden == AANTAL_QUIZ_VRAGEN){
+            verhoogMunten(aantalGoedeAntwoorden);
+        behaaldeScore += 50;       // bonus alle vragen goed
         }
         behaaldeScore += aantalGoedeAntwoorden * 10; // punten berekening
         behaaldeScore += (int)(100-speeltijd); //bonuspunten speeltijd
 
         return behaaldeScore;
+    }
+
+    public void verhoogMunten (int aantalGoedeAntwoorden) {
+        setup.speler1.voegMuntenToe(ALLES_GOED_MUNTEN_PRIJS); // hoog munten op
     }
 
     public void vulVragenPerVragenlijst(String vragenlijst){
