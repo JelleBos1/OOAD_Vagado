@@ -11,11 +11,6 @@ public class Thema {
         this.naam = naam;
     }
 
-    public ArrayList<Thema> getAlleThemas() {
-        ArrayList<Thema> themas = new ArrayList<Thema>();
-        return themas;
-    }
-
     public String getNaam() {
         return naam;
     }

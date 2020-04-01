@@ -5,7 +5,6 @@ import java.util.ArrayList;
 public class Speler extends Account {
 
     private int munten;
-//    private Setup setup = new Setup();
     ArrayList<Bezit> bezitten = new ArrayList<>();
 
     public Speler(String gebruikersnaam, String wachtwoord, Taal taal) {
@@ -26,10 +25,6 @@ public class Speler extends Account {
 
     public void voegMuntenToe(int munten){
         this.munten += munten;
-    }
-
-    public void koppelVragenlijstAanSpeler(Vragenlijst vragenlijst){
-
     }
 
     public void verlaagMuntenSaldo(int aankoopPrijs){

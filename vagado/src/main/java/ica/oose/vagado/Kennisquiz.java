@@ -184,12 +184,12 @@ public class Kennisquiz {
         List<Bezit> bezit;
         bezit = bezitten.stream().filter(bezitVanVragenlijst -> bezitVanVragenlijst.getVragenlijst().equals(gekozenVragenlijst)).collect(Collectors.toList());
 
-        System.out.println("Oude highscore: " + bezit.get(0).getHighscore() + " punten");
+        print("Oude highscore: " + bezit.get(0).getHighscore() + " punten");
 
         if (behaaldeScore > bezit.get(0).getHighscore()){
             bezit.get(0).setHighscore(behaaldeScore);
-            System.out.println("Gefeliciteerd, je hebt een nieuwe highscore behaald voor deze vragenlijst.");
-            System.out.println("Nieuwe highscore: " + behaaldeScore + " punten");
+            print("Gefeliciteerd, je hebt een nieuwe highscore behaald voor deze vragenlijst.");
+            print("Nieuwe highscore: " + behaaldeScore + " punten");
         };
 
     }
