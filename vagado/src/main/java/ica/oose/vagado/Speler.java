@@ -12,7 +12,7 @@ public class Speler extends Account {
         super(gebruikersnaam, wachtwoord, taal);
         this.setMunten(100);
         bezitten.add(new Bezit(0, java.time.LocalDate.now(), gebruikersnaam, "Formule 1"));
-        bezitten.add(new Bezit(1000, java.time.LocalDate.now(), gebruikersnaam, "Honkbal"));
+        bezitten.add(new Bezit(0, java.time.LocalDate.now(), gebruikersnaam, "Honkbal"));
         bezitten.add(new Bezit(0, java.time.LocalDate.now(), gebruikersnaam, "Algemeen"));
     }
 

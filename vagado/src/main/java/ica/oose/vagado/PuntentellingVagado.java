@@ -9,11 +9,15 @@ public class PuntentellingVagado extends Puntentelling {
 
     public int berekenScore(int aantalGoedeAntwoorden, double speelTijd) {
         int behaaldeScore = 0;
+
+        behaaldeScore += (int)(maxTijdBonus-speelTijd); //bonuspunten speeltijd
+        if (behaaldeScore < 0) behaaldeScore = 0;
+
         if (aantalGoedeAntwoorden == AANTAL_QUIZ_VRAGEN){
             behaaldeScore += allesGoedBonus;       // bonus alle vragen goed
         }
+
         behaaldeScore += aantalGoedeAntwoorden * AANTAL_QUIZ_VRAGEN; // punten berekening
-        behaaldeScore += (int)(maxTijdBonus-speelTijd); //bonuspunten speeltijd
 
         return behaaldeScore;
     }

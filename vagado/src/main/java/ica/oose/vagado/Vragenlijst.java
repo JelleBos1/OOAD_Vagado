@@ -5,15 +5,13 @@ import java.util.ArrayList;
 public class Vragenlijst {
 
     private String thema;
-    private int vragenlijstId;
     public String naam;
     public int aankoopPrijs;
     ArrayList<Vraag> alleVragen;
 
 
-    public Vragenlijst(String thema, int vragenlijstId, String naam) {
+    public Vragenlijst(String thema, String naam) {
         this.thema = thema;
-        this.vragenlijstId = vragenlijstId;
         this.naam = naam;
     }
 

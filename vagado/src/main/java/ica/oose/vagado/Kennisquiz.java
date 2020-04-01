@@ -13,20 +13,19 @@ import static ica.oose.vagado.SpelInitialisatie.ALLES_GOED_MUNTEN_PRIJS;
 
 public class Kennisquiz {
 
-    public double speelTijd;
-    public int aantalGoedeAntwoorden;
-    public int behaaldeScore;
-    public Speler speler;
-    public ArrayList<Vraag> quizvragen;
-    public ArrayList<Thema> themas;
-    public String gekozenThema;
-    public List<Vragenlijst> vragenlijsten;
-    public String gekozenVragenlijst;
-    public List<Vragenlijst> vragenlijstenPerThema;
-    public List<Vraag> quizVragen = new ArrayList<>();
-    public ArrayList<Antwoord> antwoordenSpeler = new ArrayList<>();
-    public List<Vraag> gekozenVragen;
-    public PuntentellingVagado puntentellingVagado;
+    private double speelTijd;
+    private int aantalGoedeAntwoorden;
+    private Speler speler;
+    private ArrayList<Vraag> quizvragen;
+    private ArrayList<Thema> themas;
+    private String gekozenThema;
+    private List<Vragenlijst> vragenlijsten;
+    private String gekozenVragenlijst;
+    private List<Vragenlijst> vragenlijstenPerThema;
+    private List<Vraag> quizVragen = new ArrayList<>();
+    private ArrayList<Antwoord> antwoordenSpeler = new ArrayList<>();
+    private List<Vraag> gekozenVragen;
+    private PuntentellingVagado puntentellingVagado;
 
     Scanner scanner = new Scanner(System.in);
     StopWatch timer = new StopWatch();
@@ -58,8 +57,8 @@ public class Kennisquiz {
         speelTijd = ((double)timer.getTime() / 1000);
         print("Je hebt er " + speelTijd + " seconden over gedaan.");
         print("De behaalde score is " + puntentellingVagado.berekenScore(aantalGoedeAntwoorden, speelTijd) + " punten");
+        verhoogMunten(aantalGoedeAntwoorden);
         setHighScore(puntentellingVagado.berekenScore(aantalGoedeAntwoorden, speelTijd));
-
     }
 
     public void print(String text){
@@ -86,7 +85,7 @@ public class Kennisquiz {
         vragenlijstenPerThema = vragenlijsten.stream().filter(vragenlijst -> vragenlijst.getThema().equals(gekozenThema)).collect(Collectors.toList());
 
         if (vragenlijstenPerThema.size() == 0){
-            print("Kies een geldig thema");
+            print("Dat thema bestaat niet. Kies een van de beschikbare thema's");
             kiesThema();
         }
     }
@@ -208,7 +207,9 @@ public class Kennisquiz {
     }
 
     public void verhoogMunten (int aantalGoedeAntwoorden) {
-        speler.voegMuntenToe(ALLES_GOED_MUNTEN_PRIJS); // hoog munten op
+        if (aantalGoedeAntwoorden == AANTAL_QUIZ_VRAGEN){
+            speler.voegMuntenToe(ALLES_GOED_MUNTEN_PRIJS); // hoog munten op
+        }
     }
 
     public void vulVragenPerVragenlijst(String vragenlijst){

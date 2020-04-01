@@ -1,6 +1,5 @@
 package ica.oose.vagado;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class SpelInitialisatie {
@@ -10,28 +9,22 @@ public class SpelInitialisatie {
 
     public ArrayList<Thema> setThemas() {
         ArrayList<Thema> themas = new ArrayList<>();
-        themas.add(new Thema(1, "Sport"));
-        themas.add(new Thema(2, "Muziek"));
+        themas.add(new Thema("Sport"));
+        themas.add(new Thema("Muziek"));
         return themas;
     }
 
     public Speler setSpeler(){
-        Speler speler1 = new Speler("Speler 1", "abcd", new Taal("nederlands"));
+        Speler speler1 = new Speler("Speler 1", "abcd", new Taal("Nederlands"));
         return speler1;
-    }
-
-    public Bezit setBezit(int highscore, LocalDate aankoopDatum, String gebruikersnaam, String vragenlijst){
-        Bezit bezit = new Bezit(highscore, aankoopDatum, gebruikersnaam, vragenlijst);
-        return bezit;
     }
 
     public ArrayList<Vragenlijst> setVragenlijsten(){
         ArrayList<Vragenlijst> vragenlijsten = new ArrayList<>();
 
-
-        Vragenlijst vragenlijstSportFormule1 = new Vragenlijst("Sport", 1, "Formule 1");
-        Vragenlijst vragenlijstSportHonkbal = new Vragenlijst("Sport", 2, "Honkbal");
-        Vragenlijst vragenlijstMuziekAlgemeen = new Vragenlijst("Muziek", 3, "Algemeen");
+        Vragenlijst vragenlijstSportFormule1 = new Vragenlijst("Sport", "Formule 1");
+        Vragenlijst vragenlijstSportHonkbal = new Vragenlijst("Sport", "Honkbal");
+        Vragenlijst vragenlijstMuziekAlgemeen = new Vragenlijst("Muziek", "Algemeen");
 
         vragenlijsten.add(vragenlijstSportFormule1);
         vragenlijsten.add(vragenlijstSportHonkbal);
@@ -43,9 +36,9 @@ public class SpelInitialisatie {
     public ArrayList<Vraag> setVragen(){
 
         ArrayList<Vraag> vragen = new ArrayList<>();
-        Vragenlijst vragenlijstSportFormule1 = new Vragenlijst("Sport", 1, "Formule 1");
-        Vragenlijst vragenlijstSportHonkbal = new Vragenlijst("Sport", 2, "Honkbal");
-        Vragenlijst vragenlijstMuziekAlgemeen = new Vragenlijst("Muziek", 3, "Algemeen");
+        Vragenlijst vragenlijstSportFormule1 = new Vragenlijst("Sport", "Formule 1");
+        Vragenlijst vragenlijstSportHonkbal = new Vragenlijst("Sport", "Honkbal");
+        Vragenlijst vragenlijstMuziekAlgemeen = new Vragenlijst("Muziek", "Algemeen");
 
         ArrayList<String> vraag1Antwoorden = new ArrayList<>();
         vraag1Antwoorden.add("Michael Schumacher");
@@ -289,7 +282,6 @@ public class SpelInitialisatie {
         vragen.add(new OpenVraag(43, vragenlijstMuziekAlgemeen, "In welke band zingt zanger Will.i.am?", vraag43Antwoorden));
         vragen.add(new OpenVraag(44, vragenlijstMuziekAlgemeen, "Welke genre muziek wordt er normaal bij line-dancen gespeeld?", vraag44Antwoorden));
         vragen.add(new OpenVraag(45, vragenlijstMuziekAlgemeen, "Wie staat bekend als The King of Reggae?", vraag45Antwoorden));
-
 
         return vragen;
     }

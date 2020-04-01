@@ -24,14 +24,14 @@ public class Setup {
 
     public Setup() {
 
-        Thema sport = new Thema(1, "Sport");
-        Thema muziek = new Thema(2, "Muziek");
+        Thema sport = new Thema("Sport");
+        Thema muziek = new Thema("Muziek");
         themas.add(sport);
         themas.add(muziek);
 
-        vragenlijstSportFormule1 = new Vragenlijst("Sport", 1, "Formule 1");
-        vragenlijstSportHonkbal = new Vragenlijst("Sport", 2, "Honkbal");
-        vragenlijstMuziekAlgemeen = new Vragenlijst("Muziek", 3, "Algemeen");
+        vragenlijstSportFormule1 = new Vragenlijst("Sport", "Formule 1");
+        vragenlijstSportHonkbal = new Vragenlijst("Sport", "Honkbal");
+        vragenlijstMuziekAlgemeen = new Vragenlijst("Muziek", "Algemeen");
 
         vragenlijstenSport.add(vragenlijstSportFormule1);
         vragenlijstenSport.add(vragenlijstSportHonkbal);

@@ -4,16 +4,10 @@ import java.util.ArrayList;
 
 public class Thema {
 
-    public int id;
-
-    public String getNaam() {
-        return naam;
-    }
 
     public String naam;
 
-    public Thema(int id, String naam) {
-        this.id = id;
+    public Thema(String naam) {
         this.naam = naam;
     }
 
@@ -21,4 +15,9 @@ public class Thema {
         ArrayList<Thema> themas = new ArrayList<Thema>();
         return themas;
     }
+
+    public String getNaam() {
+        return naam;
+    }
+
 }

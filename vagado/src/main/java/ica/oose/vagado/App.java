@@ -1,7 +1,7 @@
 package ica.oose.vagado;
 
 /**
- * Hello world!
+ * Vagado
  *
  */
 public class App 
