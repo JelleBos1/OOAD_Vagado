@@ -26,6 +26,7 @@ public class Kennisquiz {
     public List<Vraag> quizVragen = new ArrayList<>();
     public ArrayList<Antwoord> antwoordenSpeler = new ArrayList<>();
     public List<Vraag> gekozenVragen;
+    public PuntentellingVagado puntentellingVagado;
 
     Scanner scanner = new Scanner(System.in);
     StopWatch timer = new StopWatch();
@@ -37,6 +38,7 @@ public class Kennisquiz {
         speler = si.setSpeler();
         vragenlijsten = si.setVragenlijsten();
         quizvragen = si.setVragen();
+        puntentellingVagado = new PuntentellingVagado();
     }
 
     public void speelSpel(){
@@ -46,11 +48,18 @@ public class Kennisquiz {
         kiesThema();
         kiesVragenlijst();
         getRandomQuizVragen();
+
+        printHeader("DE QUIZ START NU");
+
         speelVragen();
+
+        printHeader("SCORE");
 
         speelTijd = ((double)timer.getTime() / 1000);
         print("Je hebt er " + speelTijd + " seconden over gedaan.");
-        print("De behaalde score is " + berekenScore(4, speelTijd) + " punten");
+        print("De behaalde score is " + puntentellingVagado.berekenScore(aantalGoedeAntwoorden, speelTijd) + " punten");
+        setHighScore(puntentellingVagado.berekenScore(aantalGoedeAntwoorden, speelTijd));
+
     }
 
     public void print(String text){
@@ -59,6 +68,12 @@ public class Kennisquiz {
 
     public void printVraag(AtomicInteger index, String vraag){
         print("Vraag " + index + ": " + vraag);
+    }
+
+    public void printHeader(String header){
+        print("\n");
+        print("////////////////////////////////////////" + header + "////////////////////////////////////////");
+        print("\n");
     }
 
     public void kiesThema(){
@@ -81,7 +96,7 @@ public class Kennisquiz {
         vragenlijstenPerThema.forEach((vragenlijst) -> print("- " + vragenlijst.getNaam()));
 
         print("Kies een vragenlijst");
-        gekozenVragenlijst = scanner.nextLine();
+        setVragenlijst(scanner.nextLine());
 
         print("Je hebt gekozen voor " + gekozenVragenlijst);
 
@@ -157,13 +172,26 @@ public class Kennisquiz {
 
     public void printAntwoordGoed(){
         print("Dat antwoord is goed!");
+        print("\n");
     }
 
     public void printAntwoordFout(){
         print("Dat antwoord is helaas fout");
+        print("\n");
     }
 
     public void setHighScore(int behaaldeScore){
+        ArrayList<Bezit> bezitten = speler.getBezitten();
+        List<Bezit> bezit;
+        bezit = bezitten.stream().filter(bezitVanVragenlijst -> bezitVanVragenlijst.getVragenlijst().equals(gekozenVragenlijst)).collect(Collectors.toList());
+
+        System.out.println("Oude highscore: " + bezit.get(0).getHighscore() + " punten");
+
+        if (behaaldeScore > bezit.get(0).getHighscore()){
+            bezit.get(0).setHighscore(behaaldeScore);
+            System.out.println("Gefeliciteerd, je hebt een nieuwe highscore behaald voor deze vragenlijst.");
+            System.out.println("Nieuwe highscore: " + behaaldeScore + " punten");
+        };
 
     }
 
@@ -171,34 +199,12 @@ public class Kennisquiz {
         gekozenThema = thema;
     }
 
-    public void setVragenlijst(Vragenlijst vragenlijst){
-
+    public void setVragenlijst(String vragenlijst){
+        gekozenVragenlijst = vragenlijst;
     }
 
     public void slaAntwoordOp(int vraagId, String antwoord){
         antwoordenSpeler.add(new Antwoord(vraagId, antwoord));
-    }
-
-    public int berekenScore(int aantalGoedeAntwoorden, double speeltijd){
-        behaaldeScore = 0;
-        if (aantalGoedeAntwoorden == AANTAL_QUIZ_VRAGEN){
-            verhoogMunten(aantalGoedeAntwoorden);
-        behaaldeScore += 50;       // bonus alle vragen goed
-        }
-        behaaldeScore += aantalGoedeAntwoorden * 10; // punten berekening
-        behaaldeScore += (int)(100-speeltijd); //bonuspunten speeltijd
-
-        ArrayList<Bezit> bezitten = speler.getBezitten();
-        List<Bezit> bezit;
-        bezit = bezitten.stream().filter(bezitVanVragenlijst -> bezitVanVragenlijst.getVragenlijst().equals(gekozenVragenlijst)).collect(Collectors.toList());
-
-        if (behaaldeScore > bezit.get(0).getHighscore()){
-            bezit.get(0).setHighscore(behaaldeScore);
-        };
-
-        bezit.forEach((bezit1) -> print("- Vragenlijst " + bezit1.getVragenlijst() + ", highscore: " + bezit1.getHighscore()));
-
-        return behaaldeScore;
     }
 
     public void verhoogMunten (int aantalGoedeAntwoorden) {
