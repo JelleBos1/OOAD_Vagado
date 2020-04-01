@@ -1,19 +1,20 @@
 package ica.oose.vagado;
 
+import java.util.ArrayList;
+
 public class Speler extends Account {
 
     private int munten;
 //    private Setup setup = new Setup();
-
+    ArrayList<Bezit> bezitten = new ArrayList<>();
 
     public Speler(String gebruikersnaam, String wachtwoord, Taal taal) {
         super(gebruikersnaam, wachtwoord, taal);
         this.setMunten(100);
-//        Bezit bezit1 = new Bezit(0, java.time.LocalDate.now(), gebruikersnaam, setup.vragenlijstSportFormule1);
-//        Bezit bezit2 = new Bezit(0, java.time.LocalDate.now(), gebruikersnaam, setup.vragenlijstSportHonkbal);
+        bezitten.add(new Bezit(0, java.time.LocalDate.now(), gebruikersnaam, "Formule 1"));
+        bezitten.add(new Bezit(0, java.time.LocalDate.now(), gebruikersnaam, "Honkbal"));
+        bezitten.add(new Bezit(0, java.time.LocalDate.now(), gebruikersnaam, "Algemeen"));
     }
-
-
 
     public int getMunten() {
         return munten;
@@ -33,5 +34,13 @@ public class Speler extends Account {
 
     public void verlaagMuntenSaldo(int aankoopPrijs){
         setMunten(getMunten() - aankoopPrijs);
+    }
+
+    public ArrayList<Bezit> getBezitten() {
+        return bezitten;
+    }
+
+    public void setBezitten(ArrayList<Bezit> bezitten) {
+        this.bezitten = bezitten;
     }
 }

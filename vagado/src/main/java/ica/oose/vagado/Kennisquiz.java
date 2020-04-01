@@ -9,25 +9,25 @@ import java.util.Scanner;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
-import static ica.oose.vagado.Puntentelling.AANTAL_QUIZ_VRAGEN;
-import static ica.oose.vagado.Puntentelling.ALLES_GOED_MUNTEN_PRIJS;
+import static ica.oose.vagado.SpelInitialisatie.AANTAL_QUIZ_VRAGEN;
+import static ica.oose.vagado.SpelInitialisatie.ALLES_GOED_MUNTEN_PRIJS;
 
 public class Kennisquiz {
 
     public double speelTijd;
     public int aantalGoedeAntwoorden;
     public int behaaldeScore;
-    public Vraag huidigeVraag;
     public Speler speler;
     public ArrayList<Vraag> quizvragen;
     public ArrayList<Thema> themas;
-    public Thema gekozenThema;
-    public ArrayList<Vragenlijst> vragenlijsten;
-    public Vragenlijst gekozenVragenlijst;
+    public String gekozenThema;
+    public List<Vragenlijst> vragenlijsten;
+    public Bezit bezit1;
+    public Bezit bezit2;
+    public String gekozenVragenlijst;
+
 
     List<Vraag> gekozenVragen;
-
-    Setup setup = new Setup();
 
     public Kennisquiz() {
 
@@ -42,11 +42,22 @@ public class Kennisquiz {
 
         System.out.println("Welkom bij Vagado " + speler.getGebruikersnaam());
 
-        System.out.println("De besckikbare vragenlijsten binnen Vagado zijn: ");
-        vragenlijsten.forEach((vragenlijst) -> System.out.println("- " + vragenlijst.getNaam()));
+        System.out.println("Beschikbare thema's: ");
+        themas.forEach((thema) -> System.out.println("- " + thema.getNaam()));
+
+        System.out.println("Kies een thema");
+        gekozenThema = scanner.nextLine();
+
+        List<Vragenlijst> vragenlijstenPerThema;
+        vragenlijstenPerThema = vragenlijsten.stream().filter(vragenlijst -> vragenlijst.getThema().equals(gekozenThema)).collect(Collectors.toList());
+
+        System.out.println("De besckikbare vragenlijsten binnen het thema " + gekozenThema + " zijn: ");
+        vragenlijstenPerThema.forEach((vragenlijst) -> System.out.println("- " + vragenlijst.getNaam()));
+//        vragenlijsten.forEach((vragenlijst) -> System.out.println("- " + vragenlijst));
+
 
         System.out.println("Kies een vragenlijst");
-        String gekozenVragenlijst = scanner.nextLine();
+        gekozenVragenlijst = scanner.nextLine();
 
         System.out.println("Je hebt gekozen voor " + gekozenVragenlijst);
 
@@ -65,7 +76,7 @@ public class Kennisquiz {
         }
 
         //Spel start eerste vraag wordt gegeven
-        ArrayList<Antwoord> gegevenAntwoorden = new ArrayList<>();
+        ArrayList<Antwoord> antwoordenSpeler = new ArrayList<>();
         AtomicInteger index = new AtomicInteger(1);
 
         timer.start();
@@ -73,39 +84,50 @@ public class Kennisquiz {
         quizVragen.forEach((vraag) -> {
 
             if (vraag instanceof OpenVraag){
-                System.out.println("Vraag " + index + ": " + vraag.getVraag());
+//                System.out.println("Vraag " + index + ": " + vraag.getVraag());
+                printVraag(index, vraag.getVraag());
+
                 ArrayList<String> antwoorden = ((OpenVraag) vraag).getGoedeAntwoorden();
                 antwoorden.forEach((antwoord) -> System.out.println("Antwoord: " + antwoord.toString()));
 
                 String antwoord = scanner.nextLine();
                 if (antwoorden.contains(antwoord)){
-                    System.out.println("GOED ANTWOORD!");
+                    printAntwoordGoed();
                     aantalGoedeAntwoorden++;
                 }
                 else {
-                    System.out.println("Fucking idiot");
+                    printAntwoordFout();
                 }
-                gegevenAntwoorden.add(new Antwoord(vraag.getId(), antwoord));
+                antwoordenSpeler.add(new Antwoord(vraag.getId(), antwoord));
             }
 
 
             if (vraag instanceof MeerkeuzeVraag){
-                System.out.println("Vraag " + index + ": " + vraag.getVraag());
+                ArrayList<String> mogelijkeAntwoorden = new ArrayList<>();
+//                System.out.println("Vraag " + index + ": " + vraag.getVraag());
+                printVraag(index, vraag.getVraag());
                 ArrayList<String> fouteAntwoorden = ((MeerkeuzeVraag) vraag).getFouteAntwoorden();
+
+                fouteAntwoorden.forEach((antwoord) -> mogelijkeAntwoorden.add(antwoord));
+
                 String goedAntwoord = ((MeerkeuzeVraag) vraag).getGoedAntwoord();
-                System.out.println("Goed antwoord: " + goedAntwoord);
-                fouteAntwoorden.forEach((antwoord) -> System.out.println("Fout antwoord: " + antwoord.toString()));
+                mogelijkeAntwoorden.add(goedAntwoord);
+
+                Collections.shuffle(mogelijkeAntwoorden);
+
+                mogelijkeAntwoorden.forEach((antwoord) -> System.out.println("- " + antwoord.toString()));
+
 
                 String antwoord = scanner.nextLine();
                 if (antwoord.equals(goedAntwoord)){
-                    System.out.println("GOED ANTWOORD!");
+                    printAntwoordGoed();
                     aantalGoedeAntwoorden++;
                 }
                 else {
-                    System.out.println("Fucking idiot");
+                    printAntwoordFout();
                 }
 
-                gegevenAntwoorden.add(new Antwoord(vraag.getId(), antwoord));
+                antwoordenSpeler.add(new Antwoord(vraag.getId(), antwoord));
             }
 
 
@@ -114,7 +136,7 @@ public class Kennisquiz {
 
             timer.stop();
 
-        for (Antwoord antwoord : gegevenAntwoorden) {
+        for (Antwoord antwoord : antwoordenSpeler) {
             System.out.println(antwoord.getAntwoord());
         }
 
@@ -134,6 +156,18 @@ public class Kennisquiz {
 
     public void speelSpel(Vragenlijst lijst){
 
+    }
+
+    public void printVraag(AtomicInteger index, String vraag){
+        System.out.println("Vraag " + index + ": " + vraag);
+    }
+
+    public void printAntwoordGoed(){
+        System.out.println("Dat antwoord is goed!");
+    }
+
+    public void printAntwoordFout(){
+        System.out.println("Dat antwoord is helaas fout");
     }
 
     public void controleerAntwoord(String goedeAntwoord, String input) {
@@ -173,11 +207,21 @@ public class Kennisquiz {
         behaaldeScore += aantalGoedeAntwoorden * 10; // punten berekening
         behaaldeScore += (int)(100-speeltijd); //bonuspunten speeltijd
 
+        ArrayList<Bezit> bezitten = speler.getBezitten();
+        List<Bezit> bezit;
+        bezit = bezitten.stream().filter(bezitVanVragenlijst -> bezitVanVragenlijst.getVragenlijst().equals(gekozenVragenlijst)).collect(Collectors.toList());
+
+        if (behaaldeScore > bezit.get(0).getHighscore()){
+            bezit.get(0).setHighscore(behaaldeScore);
+        };
+
+        bezit.forEach((bezit1) -> System.out.println("- Vragenlijst " + bezit1.getVragenlijst() + ", highscore: " + bezit1.getHighscore()));
+
         return behaaldeScore;
     }
 
     public void verhoogMunten (int aantalGoedeAntwoorden) {
-        setup.speler1.voegMuntenToe(ALLES_GOED_MUNTEN_PRIJS); // hoog munten op
+        speler.voegMuntenToe(ALLES_GOED_MUNTEN_PRIJS); // hoog munten op
     }
 
     public void vulVragenPerVragenlijst(String vragenlijst){

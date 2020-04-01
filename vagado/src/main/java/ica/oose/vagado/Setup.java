@@ -29,9 +29,9 @@ public class Setup {
         themas.add(sport);
         themas.add(muziek);
 
-        vragenlijstSportFormule1 = new Vragenlijst(1, 1, "Formule 1");
-        vragenlijstSportHonkbal = new Vragenlijst(1, 2, "Honkbal");
-        vragenlijstMuziekAlgemeen = new Vragenlijst(2, 3, "Algemeen");
+        vragenlijstSportFormule1 = new Vragenlijst("Sport", 1, "Formule 1");
+        vragenlijstSportHonkbal = new Vragenlijst("Sport", 2, "Honkbal");
+        vragenlijstMuziekAlgemeen = new Vragenlijst("Muziek", 3, "Algemeen");
 
         vragenlijstenSport.add(vragenlijstSportFormule1);
         vragenlijstenSport.add(vragenlijstSportHonkbal);
