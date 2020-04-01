@@ -25,36 +25,59 @@ public class Kennisquiz {
     public Bezit bezit1;
     public Bezit bezit2;
     public String gekozenVragenlijst;
+    List<Vragenlijst> vragenlijstenPerThema;
+    List<Vraag> quizVragen = new ArrayList<>();
+    ArrayList<Antwoord> antwoordenSpeler = new ArrayList<>();
 
+    Scanner scanner = new Scanner(System.in);
+    StopWatch timer = new StopWatch();
 
     List<Vraag> gekozenVragen;
 
     public Kennisquiz() {
-
-        Scanner scanner = new Scanner(System.in);
-        StopWatch timer = new StopWatch();
-
         SpelInitialisatie si = new SpelInitialisatie();
         themas = si.setThemas();
         speler = si.setSpeler();
         vragenlijsten = si.setVragenlijsten();
         quizvragen = si.setVragen();
+    }
+
+    public void speelSpel(){
 
         System.out.println("Welkom bij Vagado " + speler.getGebruikersnaam());
 
+        kiesThema();
+        kiesVragenlijst();
+        shuffleVragen();
+        speelVragen();
+
+        speelTijd = ((double)timer.getTime() / 1000);
+        System.out.println("Je hebt er " + speelTijd + " seconden over gedaan.");
+        System.out.println("De behaalde score is " + berekenScore(4, speelTijd) + " punten");
+    }
+
+    public void printVraag(AtomicInteger index, String vraag){
+        System.out.println("Vraag " + index + ": " + vraag);
+    }
+
+    public void kiesThema(){
         System.out.println("Beschikbare thema's: ");
         themas.forEach((thema) -> System.out.println("- " + thema.getNaam()));
 
         System.out.println("Kies een thema");
         gekozenThema = scanner.nextLine();
 
-        List<Vragenlijst> vragenlijstenPerThema;
         vragenlijstenPerThema = vragenlijsten.stream().filter(vragenlijst -> vragenlijst.getThema().equals(gekozenThema)).collect(Collectors.toList());
 
+        if (vragenlijstenPerThema.size() == 0){
+            System.out.println("Kies een geldig thema");
+            kiesThema();
+        }
+    }
+
+    public void kiesVragenlijst(){
         System.out.println("De besckikbare vragenlijsten binnen het thema " + gekozenThema + " zijn: ");
         vragenlijstenPerThema.forEach((vragenlijst) -> System.out.println("- " + vragenlijst.getNaam()));
-//        vragenlijsten.forEach((vragenlijst) -> System.out.println("- " + vragenlijst));
-
 
         System.out.println("Kies een vragenlijst");
         gekozenVragenlijst = scanner.nextLine();
@@ -62,24 +85,21 @@ public class Kennisquiz {
         System.out.println("Je hebt gekozen voor " + gekozenVragenlijst);
 
         vulVragenPerVragenlijst(gekozenVragenlijst);
+    }
 
-        System.out.println("--------------------------------------------------------------------------");
-
-        //Lijst met alle vragen die bij een vragenlijst horen
-        List<Vraag> quizVragen = new ArrayList<>();
-
+    public void shuffleVragen(){
         Collections.shuffle(gekozenVragen);
 
         for (int i = 0; i<AANTAL_QUIZ_VRAGEN; i++){
 //            System.out.println("Id: "+ quizVragen.get(i).getId() + ", " + quizVragen.get(i).getVraag());
             quizVragen.add(gekozenVragen.get(i));
         }
+    }
 
-        //Spel start eerste vraag wordt gegeven
-        ArrayList<Antwoord> antwoordenSpeler = new ArrayList<>();
-        AtomicInteger index = new AtomicInteger(1);
-
+    public void speelVragen(){
         timer.start();
+
+        AtomicInteger index = new AtomicInteger(1);
 
         quizVragen.forEach((vraag) -> {
 
@@ -134,32 +154,8 @@ public class Kennisquiz {
             index.getAndIncrement();
         });
 
-            timer.stop();
+        timer.stop();
 
-        for (Antwoord antwoord : antwoordenSpeler) {
-            System.out.println(antwoord.getAntwoord());
-        }
-
-        speelTijd = ((double)timer.getTime() / 1000);
-
-        System.out.println("Je hebt er " + speelTijd + " seconden over gedaan.");
-
-        System.out.println("De behaalde score is " + berekenScore(4, speelTijd) + " punten");
-
-        // setHighscore
-//        setup.bezit1.getHighscore();
-
-
-
-    }
-
-
-    public void speelSpel(Vragenlijst lijst){
-
-    }
-
-    public void printVraag(AtomicInteger index, String vraag){
-        System.out.println("Vraag " + index + ": " + vraag);
     }
 
     public void printAntwoordGoed(){
@@ -226,5 +222,9 @@ public class Kennisquiz {
 
     public void vulVragenPerVragenlijst(String vragenlijst){
         gekozenVragen = quizvragen.stream().filter(vraag -> vraag.getVragenlijst().getNaam().equals(vragenlijst)).collect(Collectors.toList());
+
+        if (gekozenVragen.size() == 0){
+            kiesVragenlijst();
+        }
     }
 }
