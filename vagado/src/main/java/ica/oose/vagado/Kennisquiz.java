@@ -25,14 +25,14 @@ public class Kennisquiz {
     private List<Vraag> quizVragen = new ArrayList<>();
     private ArrayList<Antwoord> antwoordenSpeler = new ArrayList<>();
     private List<Vraag> gekozenVragen;
-    private PuntentellingVagado puntentellingVagado;
+    private Puntentelling puntentellingVagado;
 
     Scanner scanner = new Scanner(System.in);
     StopWatch timer = new StopWatch();
+    SpelInitialisatie si = new SpelInitialisatie();
 
 
     public Kennisquiz() {
-        SpelInitialisatie si = new SpelInitialisatie();
         themas = si.setThemas();
         speler = si.setSpeler();
         vragenlijsten = si.setVragenlijsten();
