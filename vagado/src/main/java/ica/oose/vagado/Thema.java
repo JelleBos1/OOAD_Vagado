@@ -1,7 +1,5 @@
 package ica.oose.vagado;
 
-import java.util.ArrayList;
-
 public class Thema {
 
 

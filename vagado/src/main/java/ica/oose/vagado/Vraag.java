@@ -1,7 +1,5 @@
 package ica.oose.vagado;
 
-import java.util.ArrayList;
-
 public abstract class Vraag {
 
     private int id;

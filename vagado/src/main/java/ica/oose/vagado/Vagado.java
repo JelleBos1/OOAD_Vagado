@@ -4,7 +4,7 @@ package ica.oose.vagado;
  * Vagado
  *
  */
-public class App 
+public class Vagado
 {
     public static void main( String[] args )
     {
