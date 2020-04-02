@@ -16,7 +16,7 @@ public class Kennisquiz {
     private double speelTijd;
     private int aantalGoedeAntwoorden;
     private Speler speler;
-    private ArrayList<Vraag> quizvragen;
+    private ArrayList<Vraag> alleQuizvragen;
     private ArrayList<Thema> themas;
     private String gekozenThema;
     private List<Vragenlijst> vragenlijsten;
@@ -33,10 +33,11 @@ public class Kennisquiz {
 
 
     public Kennisquiz() {
+
         themas = si.setThemas();
         speler = si.setSpeler();
         vragenlijsten = si.setVragenlijsten();
-        quizvragen = si.setVragen();
+        alleQuizvragen = si.setVragen();
         puntentellingVagado = new PuntentellingVagado();
     }
 
@@ -213,7 +214,7 @@ public class Kennisquiz {
     }
 
     public void vulVragenPerVragenlijst(String vragenlijst){
-        gekozenVragen = quizvragen.stream().filter(vraag -> vraag.getVragenlijst().getNaam().equals(vragenlijst)).collect(Collectors.toList());
+        gekozenVragen = alleQuizvragen.stream().filter(vraag -> vraag.getVragenlijst().getNaam().equals(vragenlijst)).collect(Collectors.toList());
 
         if (gekozenVragen.size() == 0){
             kiesVragenlijst();
