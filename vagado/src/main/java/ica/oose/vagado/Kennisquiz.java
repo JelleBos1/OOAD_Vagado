@@ -47,11 +47,10 @@ public class Kennisquiz {
 
         kiesThema();
         kiesVragenlijst();
-        getRandomQuizVragen();
 
         printHeader("DE QUIZ START NU");
 
-        speelVragen();
+        speelVragen(gekozenVragenlijst);
 
         printHeader("SCORE");
 
@@ -60,6 +59,7 @@ public class Kennisquiz {
         print("De behaalde score is " + puntentellingVagado.berekenScore(aantalGoedeAntwoorden, speelTijd) + " punten");
         verhoogMunten(aantalGoedeAntwoorden);
         setHighScore(puntentellingVagado.berekenScore(aantalGoedeAntwoorden, speelTijd));
+        slaAntwoordenOp();
     }
 
     public void print(String text){
@@ -100,7 +100,6 @@ public class Kennisquiz {
 
         print("Je hebt gekozen voor " + gekozenVragenlijst);
 
-        vulVragenPerVragenlijst(gekozenVragenlijst);
     }
 
     public void getRandomQuizVragen(){
@@ -111,7 +110,11 @@ public class Kennisquiz {
         }
     }
 
-    public void speelVragen(){
+    public void speelVragen(String vragenlijst){
+
+        vulVragenPerVragenlijst(vragenlijst);
+        getRandomQuizVragen();
+
         timer.start();
 
         AtomicInteger index = new AtomicInteger(1);
@@ -193,6 +196,9 @@ public class Kennisquiz {
             print("Nieuwe highscore: " + behaaldeScore + " punten");
         };
 
+    }
+
+    public void slaAntwoordenOp(){
         GegevenAntwoorden gegevenAntwoorden = new GegevenAntwoorden(speler.getGebruikersnaam(), aantalGoedeAntwoorden, speelTijd, antwoordenSpeler);
     }
 
