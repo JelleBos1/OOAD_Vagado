@@ -193,6 +193,7 @@ public class Kennisquiz {
             print("Nieuwe highscore: " + behaaldeScore + " punten");
         };
 
+        GegevenAntwoorden gegevenAntwoorden = new GegevenAntwoorden(speler.getGebruikersnaam(), aantalGoedeAntwoorden, speelTijd, antwoordenSpeler);
     }
 
     public void setThema(String thema){

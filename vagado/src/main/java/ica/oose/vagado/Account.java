@@ -13,7 +13,6 @@ public abstract class Account {
         this.taal = taal;
     }
 
-
     public String getGebruikersnaam() {
         return gebruikersnaam;
     }
