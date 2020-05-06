@@ -26,6 +26,8 @@ public class Kennisquiz {
     private ArrayList<Antwoord> antwoordenSpeler = new ArrayList<>();
     private List<Vraag> gekozenVragen;
     private Puntentelling puntentellingVagado;
+    PuntentellingContext context = new PuntentellingContext(new PuntentellingAnderequiz());
+
 
     Scanner scanner = new Scanner(System.in);
     StopWatch timer = new StopWatch();
@@ -56,9 +58,9 @@ public class Kennisquiz {
 
         speelTijd = ((double)timer.getTime() / 1000);
         print("Je hebt er " + speelTijd + " seconden over gedaan.");
-        print("De behaalde score is " + puntentellingVagado.berekenScore(aantalGoedeAntwoorden, speelTijd) + " punten");
+        print("De behaalde score is " + context.bereken(aantalGoedeAntwoorden, speelTijd) + " punten");
         verhoogMunten(aantalGoedeAntwoorden);
-        setHighScore(puntentellingVagado.berekenScore(aantalGoedeAntwoorden, speelTijd));
+        setHighScore(context.bereken(aantalGoedeAntwoorden, speelTijd));
         slaAntwoordenOp();
     }
 
