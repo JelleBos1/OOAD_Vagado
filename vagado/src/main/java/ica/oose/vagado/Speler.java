@@ -6,6 +6,7 @@ public class Speler extends Account {
 
     private int munten;
     ArrayList<Bezit> bezitten = new ArrayList<>();
+    ArrayList<GegevenAntwoorden> spelerAntwoorden = new ArrayList<>();
 
     public Speler(String gebruikersnaam, String wachtwoord, Taal taal) {
         super(gebruikersnaam, wachtwoord, taal);
@@ -13,6 +14,10 @@ public class Speler extends Account {
         bezitten.add(new Bezit(0, java.time.LocalDate.now(), gebruikersnaam, "Formule 1"));
         bezitten.add(new Bezit(0, java.time.LocalDate.now(), gebruikersnaam, "Honkbal"));
         bezitten.add(new Bezit(0, java.time.LocalDate.now(), gebruikersnaam, "Algemeen"));
+    }
+
+    public ArrayList<GegevenAntwoorden> getSpelerAntwoorden() {
+        return spelerAntwoorden;
     }
 
     public int getMunten() {

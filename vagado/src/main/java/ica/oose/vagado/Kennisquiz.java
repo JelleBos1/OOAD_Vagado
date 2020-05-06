@@ -199,7 +199,8 @@ public class Kennisquiz {
     }
 
     public void slaAntwoordenOp(){
-        GegevenAntwoorden gegevenAntwoorden = new GegevenAntwoorden(speler.getGebruikersnaam(), aantalGoedeAntwoorden, speelTijd, antwoordenSpeler);
+        GegevenAntwoorden gegevenAntwoorden = new GegevenAntwoorden(aantalGoedeAntwoorden, speelTijd, antwoordenSpeler, gekozenVragenlijst);
+        speler.spelerAntwoorden.add(gegevenAntwoorden);
     }
 
     public void setThema(String thema){
