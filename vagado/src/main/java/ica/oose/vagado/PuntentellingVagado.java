@@ -2,7 +2,7 @@ package ica.oose.vagado;
 
 import static ica.oose.vagado.SpelInitialisatie.AANTAL_QUIZ_VRAGEN;
 
-public class PuntentellingVagado implements Puntentelling {
+public class PuntentellingVagado implements IPuntentelling {
 
     private int maxTijdBonus = 100;
     private int allesGoedBonus = 50;

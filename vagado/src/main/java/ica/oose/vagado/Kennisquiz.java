@@ -25,22 +25,20 @@ public class Kennisquiz {
     private List<Vraag> quizVragen = new ArrayList<>();
     private ArrayList<Antwoord> antwoordenSpeler = new ArrayList<>();
     private List<Vraag> gekozenVragen;
-    private Puntentelling puntentellingVagado;
-    PuntentellingContext context = new PuntentellingContext(new PuntentellingAnderequiz());
-
+    private IPuntentelling puntentelling;
 
     Scanner scanner = new Scanner(System.in);
     StopWatch timer = new StopWatch();
     SpelInitialisatie si = new SpelInitialisatie();
 
 
-    public Kennisquiz() {
+    public Kennisquiz(IPuntentelling puntentelling) {
 
         themas = si.setThemas();
         speler = si.setSpeler();
         vragenlijsten = si.setVragenlijsten();
         alleQuizvragen = si.setVragen();
-        puntentellingVagado = new PuntentellingVagado();
+        this.puntentelling = puntentelling;
     }
 
     public void speelSpel(){
@@ -58,9 +56,9 @@ public class Kennisquiz {
 
         speelTijd = ((double)timer.getTime() / 1000);
         print("Je hebt er " + speelTijd + " seconden over gedaan.");
-        print("De behaalde score is " + context.bereken(aantalGoedeAntwoorden, speelTijd) + " punten");
+        print("De behaalde score is " + this.puntentelling.berekenScore(aantalGoedeAntwoorden, speelTijd) + " punten");
         verhoogMunten(aantalGoedeAntwoorden);
-        setHighScore(context.bereken(aantalGoedeAntwoorden, speelTijd));
+        setHighScore(this.puntentelling.berekenScore(aantalGoedeAntwoorden, speelTijd));
         slaAntwoordenOp();
     }
 

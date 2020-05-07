@@ -1,6 +1,6 @@
 package ica.oose.vagado;
 
-public interface Puntentelling {
+public interface IPuntentelling {
 
     int berekenScore(int aantalGoedeAntwoorden, double speelTijd);
 }
