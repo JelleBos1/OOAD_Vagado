@@ -15,17 +15,16 @@ public class Kennisquiz {
 
     private double speelTijd;
     private int aantalGoedeAntwoorden;
-    private Speler speler;
     private ArrayList<Vraag> alleQuizvragen;
-    private ArrayList<Thema> themas;
-    private String gekozenThema;
-    private List<Vragenlijst> vragenlijsten;
     private String gekozenVragenlijst;
-    private List<Vragenlijst> vragenlijstenPerThema;
-    private List<Vraag> quizVragen = new ArrayList<>();
     private ArrayList<Antwoord> antwoordenSpeler = new ArrayList<>();
-    private List<Vraag> gekozenVragen;
+    public List<Vraag> quizVragen = new ArrayList<>();
+
     private IPuntentelling puntentelling;
+    private Printer printer = new PrinterConsole();
+
+    private final String antwoordGoedText = "Dat antwoord is goed!";
+    private final String antwoordFoutText = "Dat antwoord is fout!";
 
     Scanner scanner = new Scanner(System.in);
     StopWatch timer = new StopWatch();
@@ -34,105 +33,58 @@ public class Kennisquiz {
 
     public Kennisquiz(IPuntentelling puntentelling) {
 
-        themas = si.setThemas();
-        speler = si.setSpeler();
-        vragenlijsten = si.setVragenlijsten();
-        alleQuizvragen = si.setVragen();
+        alleQuizvragen = si.getVragen();
         this.puntentelling = puntentelling;
     }
 
     public void speelSpel(){
 
-        print("Welkom bij Vagado " + speler.getGebruikersnaam());
+        printer.printToScreen("Welkom bij Vagado " + si.getSpeler().getGebruikersnaam());
+        si.kiesThema();
+        si.kiesVragenlijst();
 
-        kiesThema();
-        kiesVragenlijst();
+        printer.printHeaderToScreen("DE QUIZ START NU");
 
-        printHeader("DE QUIZ START NU");
-
+        gekozenVragenlijst = si.getGekozenVragenlijst();
         speelVragen(gekozenVragenlijst);
 
-        printHeader("SCORE");
+        printer.printHeaderToScreen("SCORE");
 
         speelTijd = ((double)timer.getTime() / 1000);
-        print("Je hebt er " + speelTijd + " seconden over gedaan.");
-        print("De behaalde score is " + this.puntentelling.berekenScore(aantalGoedeAntwoorden, speelTijd) + " punten");
+        printer.printToScreen("Je hebt er " + speelTijd + " seconden over gedaan.");
+        printer.printToScreen("De behaalde score is " + this.puntentelling.berekenScore(aantalGoedeAntwoorden, speelTijd) + " punten");
         verhoogMunten(aantalGoedeAntwoorden);
         setHighScore(this.puntentelling.berekenScore(aantalGoedeAntwoorden, speelTijd));
         slaAntwoordenOp();
     }
 
-    public void print(String text){
-        System.out.println(text);
-    }
-
-    public void printVraag(AtomicInteger index, String vraag){
-        print("Vraag " + index + ": " + vraag);
-    }
-
-    public void printHeader(String header){
-        print("\n");
-        print("////////////////////////////////////////" + header + "////////////////////////////////////////");
-        print("\n");
-    }
-
-    public void kiesThema(){
-        print("Beschikbare thema's: ");
-        themas.forEach((thema) -> print("- " + thema.getNaam()));
-
-        print("Kies een thema");
-        setThema(scanner.nextLine());
-
-        vragenlijstenPerThema = vragenlijsten.stream().filter(vragenlijst -> vragenlijst.getThema().equals(gekozenThema)).collect(Collectors.toList());
-
-        if (vragenlijstenPerThema.size() == 0){
-            print("Dat thema bestaat niet. Kies een van de beschikbare thema's");
-            kiesThema();
-        }
-    }
-
-    public void kiesVragenlijst(){
-        print("De besckikbare vragenlijsten binnen het thema " + gekozenThema + " zijn: ");
-        vragenlijstenPerThema.forEach((vragenlijst) -> print("- " + vragenlijst.getNaam()));
-
-        print("Kies een vragenlijst");
-        setVragenlijst(scanner.nextLine());
-
-        print("Je hebt gekozen voor " + gekozenVragenlijst);
-
-    }
-
-    public void getRandomQuizVragen(){
-        Collections.shuffle(gekozenVragen);
-
-        for (int i = 0; i<AANTAL_QUIZ_VRAGEN; i++){
-            quizVragen.add(gekozenVragen.get(i));
-        }
-    }
-
     public void speelVragen(String vragenlijst){
 
-        vulVragenPerVragenlijst(vragenlijst);
-        getRandomQuizVragen();
+        si.vulVragenPerVragenlijst(vragenlijst);
+        si.getRandomQuizVragen();
 
         timer.start();
 
         AtomicInteger index = new AtomicInteger(1);
 
+        quizVragen = si.getRandomQuizVragen();
+
         quizVragen.forEach((vraag) -> {
             if (vraag instanceof OpenVraag){
-                printVraag(index, vraag.getVraag());
+                printer.printToScreen("Vraag " + index + ": " + vraag.getVraag());
 
                 ArrayList<String> antwoorden = ((OpenVraag) vraag).getGoedeAntwoorden();
-//                antwoorden.forEach((antwoord) -> print("Antwoord: " + antwoord));
 
                 String antwoord = scanner.nextLine();
                 if (antwoorden.contains(antwoord)){
-                    printAntwoordGoed();
+                    printer.printToScreen(antwoordGoedText);
+                    printer.printToScreen("\n");
+
                     aantalGoedeAntwoorden++;
                 }
                 else {
-                    printAntwoordFout();
+                    printer.printToScreen(antwoordFoutText);
+                    printer.printToScreen("\n");
                 }
 
                 slaAntwoordOp(vraag.getId(), antwoord);
@@ -140,7 +92,7 @@ public class Kennisquiz {
 
             if (vraag instanceof MeerkeuzeVraag){
                 ArrayList<String> mogelijkeAntwoorden = new ArrayList<>();
-                printVraag(index, vraag.getVraag());
+                printer.printToScreen("Vraag " + index + ": " + vraag.getVraag());
                 ArrayList<String> fouteAntwoorden = ((MeerkeuzeVraag) vraag).getFouteAntwoorden();
 
                 fouteAntwoorden.forEach((antwoord) -> mogelijkeAntwoorden.add(antwoord));
@@ -150,21 +102,21 @@ public class Kennisquiz {
 
                 Collections.shuffle(mogelijkeAntwoorden);
 
-                mogelijkeAntwoorden.forEach((antwoord) -> print("- " + antwoord));
+                mogelijkeAntwoorden.forEach((antwoord) -> printer.printToScreen("- " + antwoord));
 
                 String antwoord = scanner.nextLine();
                 if (antwoord.equals(goedAntwoord)){
-                    printAntwoordGoed();
+                    printer.printToScreen(antwoordGoedText);
+                    printer.printToScreen("\n");
                     aantalGoedeAntwoorden++;
                 }
                 else {
-                    printAntwoordFout();
+                    printer.printToScreen(antwoordFoutText);
+                    printer.printToScreen("\n");
                 }
 
                 slaAntwoordOp(vraag.getId(), antwoord);
-
             }
-
 
             index.getAndIncrement();
         });
@@ -173,42 +125,24 @@ public class Kennisquiz {
 
     }
 
-    public void printAntwoordGoed(){
-        print("Dat antwoord is goed!");
-        print("\n");
-    }
-
-    public void printAntwoordFout(){
-        print("Dat antwoord is helaas fout");
-        print("\n");
-    }
-
     public void setHighScore(int behaaldeScore){
-        ArrayList<Bezit> bezitten = speler.getBezitten();
+        ArrayList<Bezit> bezitten = si.getSpeler().getBezitten();
         List<Bezit> bezit;
         bezit = bezitten.stream().filter(bezitVanVragenlijst -> bezitVanVragenlijst.getVragenlijst().equals(gekozenVragenlijst)).collect(Collectors.toList());
 
-        print("Oude highscore: " + bezit.get(0).getHighscore() + " punten");
+        printer.printToScreen("Oude highscore: " + bezit.get(0).getHighscore() + " punten");
 
         if (behaaldeScore > bezit.get(0).getHighscore()){
             bezit.get(0).setHighscore(behaaldeScore);
-            print("Gefeliciteerd, je hebt een nieuwe highscore behaald voor deze vragenlijst.");
-            print("Nieuwe highscore: " + behaaldeScore + " punten");
+            printer.printToScreen("Gefeliciteerd, je hebt een nieuwe highscore behaald voor deze vragenlijst.");
+            printer.printToScreen("Nieuwe highscore: " + behaaldeScore + " punten");
         };
 
     }
 
     public void slaAntwoordenOp(){
         GegevenAntwoorden gegevenAntwoorden = new GegevenAntwoorden(aantalGoedeAntwoorden, speelTijd, antwoordenSpeler, gekozenVragenlijst);
-        speler.spelerAntwoorden.add(gegevenAntwoorden);
-    }
-
-    public void setThema(String thema){
-        gekozenThema = thema;
-    }
-
-    public void setVragenlijst(String vragenlijst){
-        gekozenVragenlijst = vragenlijst;
+        si.getSpeler().spelerAntwoorden.add(gegevenAntwoorden);
     }
 
     public void slaAntwoordOp(int vraagId, String antwoord){
@@ -217,15 +151,8 @@ public class Kennisquiz {
 
     public void verhoogMunten (int aantalGoedeAntwoorden) {
         if (aantalGoedeAntwoorden == AANTAL_QUIZ_VRAGEN){
-            speler.voegMuntenToe(ALLES_GOED_MUNTEN_PRIJS); // hoog munten op
+            si.getSpeler().voegMuntenToe(ALLES_GOED_MUNTEN_PRIJS); // hoog munten op
         }
     }
 
-    public void vulVragenPerVragenlijst(String vragenlijst){
-        gekozenVragen = alleQuizvragen.stream().filter(vraag -> vraag.getVragenlijst().getNaam().equals(vragenlijst)).collect(Collectors.toList());
-
-        if (gekozenVragen.size() == 0){
-            kiesVragenlijst();
-        }
-    }
 }

@@ -1,25 +1,38 @@
 package ica.oose.vagado;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class SpelInitialisatie {
 
     static final int ALLES_GOED_MUNTEN_PRIJS = 2;
     static final int AANTAL_QUIZ_VRAGEN = 10;
+    private Printer printer = new PrinterConsole();
+    private String gekozenThema = "";
+    private String gekozenVragenlijst = "";
 
-    public ArrayList<Thema> setThemas() {
+    private List<Vragenlijst> vragenlijstenPerThema;
+    private List<Vraag> gekozenVragen;
+
+    Scanner scanner = new Scanner(System.in);
+
+
+    public ArrayList<Thema> getThemas() {
         ArrayList<Thema> themas = new ArrayList<>();
         themas.add(new Thema("Sport"));
         themas.add(new Thema("Muziek"));
         return themas;
     }
 
-    public Speler setSpeler(){
+    public Speler getSpeler(){
         Speler speler1 = new Speler("Speler 1", "abcd", new Taal("Nederlands"));
         return speler1;
     }
 
-    public ArrayList<Vragenlijst> setVragenlijsten(){
+    public ArrayList<Vragenlijst> getVragenlijsten(){
         ArrayList<Vragenlijst> vragenlijsten = new ArrayList<>();
 
         Vragenlijst vragenlijstSportFormule1 = new Vragenlijst("Sport", "Formule 1");
@@ -33,7 +46,7 @@ public class SpelInitialisatie {
         return vragenlijsten;
     }
 
-    public ArrayList<Vraag> setVragen(){
+    public ArrayList<Vraag> getVragen(){
 
         ArrayList<Vraag> vragen = new ArrayList<>();
         Vragenlijst vragenlijstSportFormule1 = new Vragenlijst("Sport", "Formule 1");
@@ -283,6 +296,54 @@ public class SpelInitialisatie {
         vragen.add(new OpenVraag(44, vragenlijstMuziekAlgemeen, "Welke genre muziek wordt er normaal bij line-dancen gespeeld?", vraag44Antwoorden));
         vragen.add(new OpenVraag(45, vragenlijstMuziekAlgemeen, "Wie staat bekend als The King of Reggae?", vraag45Antwoorden));
 
+        return vragen;
+    }
+
+    public void kiesThema(){
+        printer.printToScreen("Beschikbare thema's: ");
+        getThemas().forEach((thema) -> printer.printToScreen("- " + thema.getNaam()));
+
+        printer.printToScreen("Kies een thema");
+        gekozenThema = scanner.nextLine();
+
+        vragenlijstenPerThema = getVragenlijsten().stream().filter(vragenlijst -> vragenlijst.getThema().equals(gekozenThema)).collect(Collectors.toList());
+
+        if (vragenlijstenPerThema.size() == 0){
+            printer.printToScreen("Dat thema bestaat niet. Kies een van de beschikbare thema's");
+            kiesThema();
+        }
+    }
+
+    public void kiesVragenlijst(){
+        printer.printToScreen("De besckikbare vragenlijsten binnen het thema " + gekozenThema + " zijn: ");
+        vragenlijstenPerThema.forEach((vragenlijst) -> printer.printToScreen("- " + vragenlijst.getNaam()));
+
+        printer.printToScreen("Kies een vragenlijst");
+        gekozenVragenlijst = scanner.nextLine();
+
+        printer.printToScreen("Je hebt gekozen voor " + gekozenVragenlijst);
+
+    }
+
+    public void vulVragenPerVragenlijst(String vragenlijst){
+        gekozenVragen = getVragen().stream().filter(vraag -> vraag.getVragenlijst().getNaam().equals(vragenlijst)).collect(Collectors.toList());
+
+        if (gekozenVragen.size() == 0){
+            kiesVragenlijst();
+        }
+    }
+
+    public String getGekozenVragenlijst(){
+        return gekozenVragenlijst;
+    }
+    public ArrayList<Vraag> getRandomQuizVragen(){
+
+        ArrayList<Vraag> vragen = new ArrayList<>();
+        Collections.shuffle(gekozenVragen);
+
+        for (int i = 0; i<AANTAL_QUIZ_VRAGEN; i++){
+            vragen.add(gekozenVragen.get(i));
+        }
         return vragen;
     }
 }
