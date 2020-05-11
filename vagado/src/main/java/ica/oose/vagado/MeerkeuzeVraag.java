@@ -1,11 +1,13 @@
 package ica.oose.vagado;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class MeerkeuzeVraag extends Vraag {
 
     private String goedAntwoord;
     private ArrayList<String> fouteAntwoorden;
+    private Kennisquiz quiz;
 
     public MeerkeuzeVraag(int id, Vragenlijst vragenlijst, String vraag, String goedAntwoord, ArrayList<String> fouteAntwoorden) {
         super(id, vragenlijst, vraag);
@@ -19,5 +21,30 @@ public class MeerkeuzeVraag extends Vraag {
 
     public ArrayList<String> getFouteAntwoorden() {
         return fouteAntwoorden;
+    }
+
+    public void printMogelijkeAntwoorden(){
+
+        ArrayList<String> alleAntwoorden = new ArrayList<>();
+        alleAntwoorden.add(goedAntwoord);
+
+        for (String antwoord : fouteAntwoorden){
+            alleAntwoorden.add(antwoord);
+        }
+
+        Collections.shuffle(alleAntwoorden);
+
+        alleAntwoorden.forEach((antwoord) -> printer.printToScreen("- " + antwoord));
+
+    }
+
+    @Override
+    protected boolean controleerAntwoord(String antwoord) {
+        if (antwoord.equals(goedAntwoord)){
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 }

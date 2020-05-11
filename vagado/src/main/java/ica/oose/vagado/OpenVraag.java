@@ -1,6 +1,7 @@
 package ica.oose.vagado;
 
 import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class OpenVraag extends Vraag {
 
@@ -13,5 +14,15 @@ public class OpenVraag extends Vraag {
 
     public ArrayList<String> getGoedeAntwoorden() {
         return goedeAntwoorden;
+    }
+
+    @Override
+    protected boolean controleerAntwoord(String antwoord) {
+        if (goedeAntwoorden.contains(antwoord)){
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 }

@@ -2,7 +2,6 @@ package ica.oose.vagado;
 
 import org.apache.commons.lang3.time.StopWatch;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -14,17 +13,16 @@ import static ica.oose.vagado.SpelInitialisatie.ALLES_GOED_MUNTEN_PRIJS;
 public class Kennisquiz {
 
     private double speelTijd;
-    private int aantalGoedeAntwoorden;
-    private ArrayList<Vraag> alleQuizvragen;
+    public int aantalGoedeAntwoorden;
     private String gekozenVragenlijst;
     private ArrayList<Antwoord> antwoordenSpeler = new ArrayList<>();
     public List<Vraag> quizVragen = new ArrayList<>();
 
+    protected final String antwoordGoedText = "Dat antwoord is goed!";
+    protected final String antwoordFoutText = "Dat antwoord is fout!";
+
     private IPuntentelling puntentelling;
     private Printer printer = new PrinterConsole();
-
-    private final String antwoordGoedText = "Dat antwoord is goed!";
-    private final String antwoordFoutText = "Dat antwoord is fout!";
 
     Scanner scanner = new Scanner(System.in);
     StopWatch timer = new StopWatch();
@@ -32,8 +30,6 @@ public class Kennisquiz {
 
 
     public Kennisquiz(IPuntentelling puntentelling) {
-
-        alleQuizvragen = si.getVragen();
         this.puntentelling = puntentelling;
     }
 
@@ -65,18 +61,17 @@ public class Kennisquiz {
 
         timer.start();
 
+        //Normale integer werkt niet binnen een Lambda expressie
         AtomicInteger index = new AtomicInteger(1);
 
         quizVragen = si.getRandomQuizVragen();
 
         quizVragen.forEach((vraag) -> {
             if (vraag instanceof OpenVraag){
-                printer.printToScreen("Vraag " + index + ": " + vraag.getVraag());
-
-                ArrayList<String> antwoorden = ((OpenVraag) vraag).getGoedeAntwoorden();
+                vraag.printVraag(index);
 
                 String antwoord = scanner.nextLine();
-                if (antwoorden.contains(antwoord)){
+                if (vraag.controleerAntwoord(antwoord)){
                     printer.printToScreen(antwoordGoedText);
                     printer.printToScreen("\n");
 
@@ -91,21 +86,14 @@ public class Kennisquiz {
             }
 
             if (vraag instanceof MeerkeuzeVraag){
-                ArrayList<String> mogelijkeAntwoorden = new ArrayList<>();
-                printer.printToScreen("Vraag " + index + ": " + vraag.getVraag());
-                ArrayList<String> fouteAntwoorden = ((MeerkeuzeVraag) vraag).getFouteAntwoorden();
 
-                fouteAntwoorden.forEach((antwoord) -> mogelijkeAntwoorden.add(antwoord));
+                vraag.printVraag(index);
 
-                String goedAntwoord = ((MeerkeuzeVraag) vraag).getGoedAntwoord();
-                mogelijkeAntwoorden.add(goedAntwoord);
-
-                Collections.shuffle(mogelijkeAntwoorden);
-
-                mogelijkeAntwoorden.forEach((antwoord) -> printer.printToScreen("- " + antwoord));
+                ((MeerkeuzeVraag) vraag).printMogelijkeAntwoorden();
 
                 String antwoord = scanner.nextLine();
-                if (antwoord.equals(goedAntwoord)){
+
+                if (vraag.controleerAntwoord(antwoord)){
                     printer.printToScreen(antwoordGoedText);
                     printer.printToScreen("\n");
                     aantalGoedeAntwoorden++;
