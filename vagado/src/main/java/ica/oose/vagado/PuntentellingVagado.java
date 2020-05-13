@@ -1,6 +1,6 @@
 package ica.oose.vagado;
 
-import static ica.oose.vagado.SpelInitialisatie.AANTAL_QUIZ_VRAGEN;
+import static ica.oose.vagado.Kennisquiz.AANTAL_QUIZ_VRAGEN;
 
 public class PuntentellingVagado implements IPuntentelling {
 

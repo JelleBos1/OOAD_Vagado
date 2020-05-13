@@ -2,6 +2,8 @@ package ica.oose.vagado;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
+import static ica.oose.vagado.Kennisquiz.PRINTER;
+
 public abstract class Vraag {
 
     protected Printer printer = new PrinterConsole();
@@ -30,7 +32,7 @@ public abstract class Vraag {
     }
 
     public void printVraag(AtomicInteger index) {
-        printer.printToScreen("Vraag " + index + ": " + getVraag());
+        PRINTER.printToScreen("Vraag " + index + ": " + getVraag());
     }
 
     protected abstract boolean controleerAntwoord(String antwoord);

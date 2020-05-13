@@ -3,22 +3,17 @@ package ica.oose.vagado;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Scanner;
 import java.util.stream.Collectors;
+
+import static ica.oose.vagado.Kennisquiz.*;
 
 public class SpelInitialisatie {
 
-    static final int ALLES_GOED_MUNTEN_PRIJS = 2;
-    static final int AANTAL_QUIZ_VRAGEN = 10;
-    private Printer printer = new PrinterConsole();
     private String gekozenThema = "";
     private String gekozenVragenlijst = "";
 
     private List<Vragenlijst> vragenlijstenPerThema;
     private List<Vraag> gekozenVragen;
-
-    Scanner scanner = new Scanner(System.in);
-
 
     public ArrayList<Thema> getThemas() {
         ArrayList<Thema> themas = new ArrayList<>();
@@ -300,29 +295,28 @@ public class SpelInitialisatie {
     }
 
     public void kiesThema(){
-        printer.printToScreen("Beschikbare thema's: ");
-        getThemas().forEach((thema) -> printer.printToScreen("- " + thema.getNaam()));
+        PRINTER.printToScreen("Beschikbare thema's: ");
+        getThemas().forEach((thema) -> PRINTER.printToScreen("- " + thema.getNaam()));
 
-        printer.printToScreen("Kies een thema");
-        gekozenThema = scanner.nextLine();
+        PRINTER.printToScreen("Kies een thema");
+        gekozenThema = INPUT.getInput();
 
         vragenlijstenPerThema = getVragenlijsten().stream().filter(vragenlijst -> vragenlijst.getThema().equals(gekozenThema)).collect(Collectors.toList());
 
         if (vragenlijstenPerThema.size() == 0){
-            printer.printToScreen("Dat thema bestaat niet. Kies een van de beschikbare thema's");
+            PRINTER.printToScreen("Dat thema bestaat niet. Kies een van de beschikbare thema's");
             kiesThema();
         }
     }
 
     public void kiesVragenlijst(){
-        printer.printToScreen("De besckikbare vragenlijsten binnen het thema " + gekozenThema + " zijn: ");
-        vragenlijstenPerThema.forEach((vragenlijst) -> printer.printToScreen("- " + vragenlijst.getNaam()));
+        PRINTER.printToScreen("De besckikbare vragenlijsten binnen het thema " + gekozenThema + " zijn: ");
+        vragenlijstenPerThema.forEach((vragenlijst) -> PRINTER.printToScreen("- " + vragenlijst.getNaam()));
 
-        printer.printToScreen("Kies een vragenlijst");
-        gekozenVragenlijst = scanner.nextLine();
+        PRINTER.printToScreen("Kies een vragenlijst");
+        gekozenVragenlijst = INPUT.getInput();
 
-        printer.printToScreen("Je hebt gekozen voor " + gekozenVragenlijst);
-
+        PRINTER.printToScreen("Je hebt gekozen voor " + gekozenVragenlijst);
     }
 
     public void vulVragenPerVragenlijst(String vragenlijst){
@@ -336,6 +330,7 @@ public class SpelInitialisatie {
     public String getGekozenVragenlijst(){
         return gekozenVragenlijst;
     }
+
     public ArrayList<Vraag> getRandomQuizVragen(){
 
         ArrayList<Vraag> vragen = new ArrayList<>();
