@@ -8,8 +8,8 @@ import java.util.stream.Collectors;
 
 public class Kennisquiz {
 
-    protected final static Printer PRINTER = new PrinterConsole();
-    protected final static Input INPUT = new InputScanner();
+    protected final static IPrinter PRINTER = new PrinterConsole();
+    protected final static IInput INPUT = new InputScanner();
 
     protected static final int ALLES_GOED_MUNTEN_PRIJS = 2;
     protected static final int AANTAL_QUIZ_VRAGEN = 10;

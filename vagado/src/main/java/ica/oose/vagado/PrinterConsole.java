@@ -1,6 +1,6 @@
 package ica.oose.vagado;
 
-public class PrinterConsole extends Printer {
+public class PrinterConsole implements IPrinter {
 
     @Override
     public void printToScreen(String message) {

@@ -6,7 +6,7 @@ import static ica.oose.vagado.Kennisquiz.PRINTER;
 
 public abstract class Vraag {
 
-    protected Printer printer = new PrinterConsole();
+    protected IPrinter printer = new PrinterConsole();
 
 
     private int id;

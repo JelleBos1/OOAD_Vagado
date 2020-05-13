@@ -2,7 +2,7 @@ package ica.oose.vagado;
 
 import java.util.Scanner;
 
-public class InputScanner extends Input {
+public class InputScanner implements IInput {
 
     public Scanner scan = new Scanner(System.in);
 
