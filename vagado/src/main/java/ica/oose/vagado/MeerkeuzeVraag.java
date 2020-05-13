@@ -3,6 +3,8 @@ package ica.oose.vagado;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import static ica.oose.vagado.Kennisquiz.PRINTER;
+
 public class MeerkeuzeVraag extends Vraag {
 
     private String goedAntwoord;
@@ -24,9 +26,7 @@ public class MeerkeuzeVraag extends Vraag {
         }
 
         Collections.shuffle(alleAntwoorden);
-
-        alleAntwoorden.forEach((antwoord) -> printer.printToScreen("- " + antwoord));
-
+        alleAntwoorden.forEach((antwoord) -> PRINTER.printToScreen("- " + antwoord));
     }
 
     @Override

@@ -6,9 +6,10 @@ public class Vragenlijst {
     public String naam;
     public int aankoopPrijs;
 
-    public Vragenlijst(String thema, String naam) {
+    public Vragenlijst(String thema, String naam, int aankoopPrijs) {
         this.thema = thema;
         this.naam = naam;
+        this.aankoopPrijs = aankoopPrijs;
     }
 
     public String getNaam() {

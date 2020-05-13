@@ -11,11 +11,11 @@ public class Kennisquiz {
     protected final static IPrinter PRINTER = new PrinterConsole();
     protected final static IInput INPUT = new InputScanner();
 
-    protected static final int ALLES_GOED_MUNTEN_PRIJS = 2;
+    private static final int ALLES_GOED_MUNTEN_PRIJS = 2;
     protected static final int AANTAL_QUIZ_VRAGEN = 10;
 
-    protected final static String antwoordGoedText = "Dat antwoord is goed!";
-    protected final static String antwoordFoutText = "Dat antwoord is fout!";
+    private final String ANTWOORD_GOED_TEXT = "Dat antwoord is goed!";
+    private final String ANTWOORD_FOUT_TEXT = "Dat antwoord is fout!";
 
     private double speelTijd;
     public int aantalGoedeAntwoorden;
@@ -73,13 +73,13 @@ public class Kennisquiz {
 
                 antwoord = INPUT.getInput();
                 if (vraag.controleerAntwoord(antwoord)){
-                    PRINTER.printToScreen(antwoordGoedText);
+                    PRINTER.printToScreen(ANTWOORD_GOED_TEXT);
                     PRINTER.printToScreen("\n");
 
                     aantalGoedeAntwoorden++;
                 }
                 else {
-                    PRINTER.printToScreen(antwoordFoutText);
+                    PRINTER.printToScreen(ANTWOORD_FOUT_TEXT);
                     PRINTER.printToScreen("\n");
                 }
                 slaAntwoordOp(vraag.getId(), antwoord);
@@ -91,12 +91,12 @@ public class Kennisquiz {
 
                 antwoord = INPUT.getInput();
                 if (vraag.controleerAntwoord(antwoord)){
-                    PRINTER.printToScreen(antwoordGoedText);
+                    PRINTER.printToScreen(ANTWOORD_GOED_TEXT);
                     PRINTER.printToScreen("\n");
                     aantalGoedeAntwoorden++;
                 }
                 else {
-                    PRINTER.printToScreen(antwoordFoutText);
+                    PRINTER.printToScreen(ANTWOORD_FOUT_TEXT);
                     PRINTER.printToScreen("\n");
                 }
 

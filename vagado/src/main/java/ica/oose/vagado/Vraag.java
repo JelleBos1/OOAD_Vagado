@@ -6,9 +6,6 @@ import static ica.oose.vagado.Kennisquiz.PRINTER;
 
 public abstract class Vraag {
 
-    protected IPrinter printer = new PrinterConsole();
-
-
     private int id;
     private Vragenlijst vragenlijst;
     private String vraag;
@@ -19,19 +16,19 @@ public abstract class Vraag {
         this.vraag = vraag;
     }
 
-    public String getVraag() {
+    private String getVraag() {
         return vraag;
     }
 
-    public int getId() {
+    protected int getId() {
         return id;
     }
 
-    public Vragenlijst getVragenlijst() {
+    protected Vragenlijst getVragenlijst() {
         return vragenlijst;
     }
 
-    public void printVraag(AtomicInteger index) {
+    protected void printVraag(AtomicInteger index) {
         PRINTER.printToScreen("Vraag " + index + ": " + getVraag());
     }
 

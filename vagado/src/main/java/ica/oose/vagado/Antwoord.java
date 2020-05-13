@@ -8,9 +8,4 @@ public class Antwoord {
         this.vraagId = vraagId;
         this.antwoord = antwoord;
     }
-
-    public String getAntwoord() {
-        return antwoord;
-    }
-
 }
