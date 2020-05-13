@@ -7,7 +7,7 @@ public class GegevenAntwoorden {
     private int aantalGoedeAntwoorden;
     private double speeltijd;
     private ArrayList<Antwoord> antwoordenSpeler;
-    String vragenlijst;
+    private String vragenlijst;
 
     public GegevenAntwoorden(int aantalGoedeAntwoorden, double speeltijd, ArrayList<Antwoord> antwoordenSpeler, String vragenlijst) {
         this.aantalGoedeAntwoorden = aantalGoedeAntwoorden;

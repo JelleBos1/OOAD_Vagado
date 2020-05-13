@@ -21,21 +21,24 @@ public class Kennisquiz {
     public int aantalGoedeAntwoorden;
     private String gekozenVragenlijst;
     private ArrayList<Antwoord> antwoordenSpeler = new ArrayList<>();
+    private GegevenAntwoorden gegevenAntwoorden = null;
     public List<Vraag> quizVragen = new ArrayList<>();
 
     private IPuntentelling puntentelling;
+    private Speler speler;
 
     StopWatch timer = new StopWatch();
 
-    SpelInitialisatie si = new SpelInitialisatie();
+    private SpelInitialisatie si = new SpelInitialisatie();
 
-    public Kennisquiz(IPuntentelling puntentelling) {
+    public Kennisquiz(Speler speler, IPuntentelling puntentelling) {
+        this.speler = speler;
         this.puntentelling = puntentelling;
     }
 
     public void speelSpel(){
 
-        PRINTER.printToScreen("Welkom bij Vagado " + si.getSpeler().getGebruikersnaam());
+        PRINTER.printToScreen("Welkom bij Vagado " + this.speler.getGebruikersnaam());
         si.kiesThema();
         si.kiesVragenlijst();
 
@@ -57,7 +60,6 @@ public class Kennisquiz {
     public void speelVragen(String vragenlijst){
 
         si.vulVragenPerVragenlijst(vragenlijst);
-        si.getRandomQuizVragen();
 
         timer.start();
 
@@ -108,7 +110,7 @@ public class Kennisquiz {
     }
 
     public void setHighScore(int behaaldeScore){
-        ArrayList<Bezit> bezitten = si.getSpeler().getBezitten();
+        ArrayList<Bezit> bezitten = this.speler.getBezitten();
         List<Bezit> bezit;
         bezit = bezitten.stream().filter(bezitVanVragenlijst -> bezitVanVragenlijst.getVragenlijst().equals(gekozenVragenlijst)).collect(Collectors.toList());
 
@@ -122,8 +124,8 @@ public class Kennisquiz {
     }
 
     public void slaAntwoordenOp(){
-        GegevenAntwoorden gegevenAntwoorden = new GegevenAntwoorden(aantalGoedeAntwoorden, speelTijd, antwoordenSpeler, gekozenVragenlijst);
-        si.getSpeler().spelerAntwoorden.add(gegevenAntwoorden);
+        gegevenAntwoorden = new GegevenAntwoorden(aantalGoedeAntwoorden, speelTijd, antwoordenSpeler, gekozenVragenlijst);
+        this.speler.spelerAntwoorden.add(gegevenAntwoorden);
     }
 
     public void slaAntwoordOp(int vraagId, String antwoord){
@@ -132,7 +134,7 @@ public class Kennisquiz {
 
     public void verhoogMunten (int aantalGoedeAntwoorden) {
         if (aantalGoedeAntwoorden == AANTAL_QUIZ_VRAGEN){
-            si.getSpeler().voegMuntenToe(ALLES_GOED_MUNTEN_PRIJS);
+            this.speler.voegMuntenToe(ALLES_GOED_MUNTEN_PRIJS);
         }
     }
 }

@@ -8,7 +8,9 @@ public class Vagado
 {
     public static void main( String[] args )
     {
-        Kennisquiz kennisquiz = new Kennisquiz(new PuntentellingVagado());
+        Speler speler1 = new Speler("Speler 1", "wachtwoord", new Taal("Nederlands"));
+
+        Kennisquiz kennisquiz = new Kennisquiz(speler1, new PuntentellingVagado());
         kennisquiz.speelSpel();
     }
 }

@@ -39,8 +39,4 @@ public class Speler extends Account {
     public ArrayList<Bezit> getBezitten() {
         return bezitten;
     }
-
-    public void setBezitten(ArrayList<Bezit> bezitten) {
-        this.bezitten = bezitten;
-    }
 }

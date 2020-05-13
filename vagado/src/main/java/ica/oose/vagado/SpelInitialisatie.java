@@ -22,11 +22,6 @@ public class SpelInitialisatie {
         return themas;
     }
 
-    public Speler getSpeler(){
-        Speler speler1 = new Speler("Speler 1", "abcd", new Taal("Nederlands"));
-        return speler1;
-    }
-
     public ArrayList<Vragenlijst> getVragenlijsten(){
         ArrayList<Vragenlijst> vragenlijsten = new ArrayList<>();
 
@@ -341,4 +336,5 @@ public class SpelInitialisatie {
         }
         return vragen;
     }
+
 }
