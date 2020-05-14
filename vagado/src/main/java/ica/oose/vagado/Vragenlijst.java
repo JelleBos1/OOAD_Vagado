@@ -8,7 +8,7 @@ import static ica.oose.vagado.Kennisquiz.AANTAL_QUIZ_VRAGEN;
 
 public class Vragenlijst {
 
-    private String thema;
+    private Thema thema;
     public String naam;
     public int aankoopPrijs;
 
@@ -16,7 +16,7 @@ public class Vragenlijst {
         this.naam = naam;
     }
 
-    public Vragenlijst(String thema, String naam, int aankoopPrijs) {
+    public Vragenlijst(Thema thema, String naam, int aankoopPrijs) {
         this.thema = thema;
         this.naam = naam;
         this.aankoopPrijs = aankoopPrijs;
@@ -26,7 +26,7 @@ public class Vragenlijst {
         return naam;
     }
 
-    public String getThema() {
+    public Thema getThema() {
         return thema;
     }
 

@@ -1,7 +1,6 @@
 package ica.oose.vagado;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -9,25 +8,17 @@ import static ica.oose.vagado.Kennisquiz.*;
 
 public class SpelInitialisatie {
 
-    private String gekozenThema = "";
-    private String gekozenVragenlijst = "";
-
-    private List<Vragenlijst> vragenlijstenPerThema;
     private List<Vraag> gekozenVragen;
 
-    public ArrayList<Thema> getThemas() {
-        ArrayList<Thema> themas = new ArrayList<>();
-        themas.add(new Thema("Sport"));
-        themas.add(new Thema("Muziek"));
-        return themas;
-    }
+    Thema sport = new Thema("Sport");
+    Thema muziek = new Thema("Muziek");
+
+    Vragenlijst vragenlijstSportFormule1 = new Vragenlijst(sport, "Sport - Formule 1", 50);
+    Vragenlijst vragenlijstSportHonkbal = new Vragenlijst(sport, "Sport - Honkbal", 50);
+    Vragenlijst vragenlijstMuziekAlgemeen = new Vragenlijst(muziek, "Muziek - Algemeen", 50);
 
     public ArrayList<Vragenlijst> getVragenlijsten(){
         ArrayList<Vragenlijst> vragenlijsten = new ArrayList<>();
-
-        Vragenlijst vragenlijstSportFormule1 = new Vragenlijst("Sport", "Sport - Formule 1", 50);
-        Vragenlijst vragenlijstSportHonkbal = new Vragenlijst("Sport", "Sport - Honkbal", 50);
-        Vragenlijst vragenlijstMuziekAlgemeen = new Vragenlijst("Muziek", "Muziek - Algemeen", 50);
 
         vragenlijsten.add(vragenlijstSportFormule1);
         vragenlijsten.add(vragenlijstSportHonkbal);
@@ -39,9 +30,6 @@ public class SpelInitialisatie {
     public ArrayList<Vraag> getVragen(){
 
         ArrayList<Vraag> vragen = new ArrayList<>();
-        Vragenlijst vragenlijstSportFormule1 = new Vragenlijst("Sport", "Sport - Formule 1", 50);
-        Vragenlijst vragenlijstSportHonkbal = new Vragenlijst("Sport", "Sport - Honkbal", 50);
-        Vragenlijst vragenlijstMuziekAlgemeen = new Vragenlijst("Muziek", "Muziek - Algemeen", 50);
 
         ArrayList<String> vraag1Antwoorden = new ArrayList<>();
         vraag1Antwoorden.add("Michael Schumacher");
@@ -289,56 +277,17 @@ public class SpelInitialisatie {
         return vragen;
     }
 
-    public void kiesThema(){
-        PRINTER.printToScreen("Beschikbare thema's: ");
-        getThemas().forEach((thema) -> PRINTER.printToScreen("- " + thema.getNaam()));
-
-        PRINTER.printToScreen("Kies een thema");
-        gekozenThema = INPUT.getInput();
-
-        vragenlijstenPerThema = getVragenlijsten().stream().filter(vragenlijst -> vragenlijst.getThema().equals(gekozenThema)).collect(Collectors.toList());
-
-        if (vragenlijstenPerThema.size() == 0){
-            PRINTER.printToScreen("Dat thema bestaat niet. Kies een van de beschikbare thema's");
-            kiesThema();
-        }
-    }
-
-    public void kiesVragenlijst(){
-        PRINTER.printToScreen("De besckikbare vragenlijsten binnen het thema " + gekozenThema + " zijn: ");
-        vragenlijstenPerThema.forEach((vragenlijst) -> PRINTER.printToScreen("- " + vragenlijst.getNaam()));
-
-        PRINTER.printToScreen("Kies een vragenlijst");
-        gekozenVragenlijst = INPUT.getInput();
-
-        PRINTER.printToScreen("Je hebt gekozen voor " + gekozenVragenlijst);
-    }
-
     public void vulVragenPerVragenlijst(Vragenlijst vragenlijst){
         gekozenVragen = getVragen().stream().filter(vraag -> vraag.getVragenlijst().getNaam().equals(vragenlijst.getNaam())).collect(Collectors.toList());
 
         if (gekozenVragen.size() == 0){
-            kiesVragenlijst();
+            PRINTER.printToScreen("Vragenlijst niet gevonden. Start de quiz opnieuw met een bestaande vragenlijst.");
+            throw new Error("Vragenlijst niet gevonden");
         }
     }
 
     public List<Vraag> getGekozenVragen(){
         return gekozenVragen;
-    }
-
-    public String getGekozenVragenlijst(){
-        return gekozenVragenlijst;
-    }
-
-    public ArrayList<Vraag> getRandomQuizVragen(){
-
-        ArrayList<Vraag> vragen = new ArrayList<>();
-        Collections.shuffle(gekozenVragen);
-
-        for (int i = 0; i<AANTAL_QUIZ_VRAGEN; i++){
-            vragen.add(gekozenVragen.get(i));
-        }
-        return vragen;
     }
 
 }

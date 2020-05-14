@@ -10,9 +10,13 @@ public class Vagado
     {
         Speler speler = new Speler("Speler 1", "wachtwoord", new Taal("Nederlands"));
         IPuntentelling puntentelling = new PuntentellingVagado();
-        Vragenlijst vragenlijst = new Vragenlijst("Sport - Formule 1");
 
-        Kennisquiz kennisquiz = new Kennisquiz(speler, puntentelling, vragenlijst);
+        //De drie geimplementeerde vragenlijsten. Om een andere vragenlijst te spelen, verander simpelweg de vragenlijst in de constructor van Kennisquiz
+        Vragenlijst vragenlijstFormule1 = new Vragenlijst("Sport - Formule 1");
+        Vragenlijst vragenlijstHonkbal = new Vragenlijst("Sport - Honkbal");
+        Vragenlijst vragenlijstMuziek = new Vragenlijst("Muziek - Algemeen");
+
+        Kennisquiz kennisquiz = new Kennisquiz(speler, puntentelling, vragenlijstHonkbal);
         kennisquiz.speelSpel();
     }
 }
