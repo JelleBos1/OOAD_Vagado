@@ -7,9 +7,9 @@ public class Bezit {
     private int highscore;
     private LocalDate aankoopDatum;
     private String gebruikersnaam;
-    private String vragenlijst;
+    private Vragenlijst vragenlijst;
 
-    public Bezit(int highscore, LocalDate aankoopDatum, String gebruikersnaam, String vragenlijst) {
+    public Bezit(int highscore, LocalDate aankoopDatum, String gebruikersnaam, Vragenlijst vragenlijst) {
         this.highscore = highscore;
         this.aankoopDatum = aankoopDatum;
         this.gebruikersnaam = gebruikersnaam;
@@ -24,7 +24,7 @@ public class Bezit {
         this.highscore = highscore;
     }
 
-    public String getVragenlijst() {
+    public Vragenlijst getVragenlijst() {
         return vragenlijst;
     }
 }

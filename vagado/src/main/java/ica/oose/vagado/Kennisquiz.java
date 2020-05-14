@@ -19,33 +19,32 @@ public class Kennisquiz {
 
     private double speelTijd;
     public int aantalGoedeAntwoorden;
-    private String gekozenVragenlijst;
     private ArrayList<Antwoord> antwoordenSpeler = new ArrayList<>();
     private GegevenAntwoorden gegevenAntwoorden = null;
-    public List<Vraag> quizVragen = new ArrayList<>();
+    List<Vraag> gekozenVragen = new ArrayList<>();
 
     private IPuntentelling puntentelling;
     private Speler speler;
+    private Vragenlijst vragenlijst;
 
     StopWatch timer = new StopWatch();
 
     private SpelInitialisatie si = new SpelInitialisatie();
 
-    public Kennisquiz(Speler speler, IPuntentelling puntentelling) {
+    public Kennisquiz(Speler speler, IPuntentelling puntentelling, Vragenlijst vragenlijst) {
         this.speler = speler;
         this.puntentelling = puntentelling;
+        this.vragenlijst = vragenlijst;
+
     }
 
     public void speelSpel(){
 
         PRINTER.printToScreen("Welkom bij Vagado " + this.speler.getGebruikersnaam());
-        si.kiesThema();
-        si.kiesVragenlijst();
-
         PRINTER.printHeaderToScreen("DE QUIZ START NU");
+        PRINTER.printToScreen("De vragenlijst waarmee de quiz gespeeld wordt is " + vragenlijst.getNaam() + "\n");
 
-        gekozenVragenlijst = si.getGekozenVragenlijst();
-        speelVragen(gekozenVragenlijst);
+        speelVragen(vragenlijst);
 
         PRINTER.printHeaderToScreen("SCORE");
 
@@ -57,18 +56,20 @@ public class Kennisquiz {
         slaAntwoordenOp();
     }
 
-    public void speelVragen(String vragenlijst){
+    public void speelVragen(Vragenlijst vragenlijst){
 
         si.vulVragenPerVragenlijst(vragenlijst);
+
+        gekozenVragen = si.getGekozenVragen();
 
         timer.start();
 
         //Normale integer werkt niet binnen een Lambda expressie
         AtomicInteger index = new AtomicInteger(1);
 
-        quizVragen = si.getRandomQuizVragen();
+//        quizVragen = vragenlijst.getRandomQuizVragen(gekozenVragen);
 
-        quizVragen.forEach((vraag) -> {
+        vragenlijst.getRandomQuizVragen(gekozenVragen).forEach((vraag) -> {
             String antwoord;
             if (vraag instanceof OpenVraag){
                 vraag.printVraag(index);
@@ -112,7 +113,7 @@ public class Kennisquiz {
     public void setHighScore(int behaaldeScore){
         ArrayList<Bezit> bezitten = this.speler.getBezitten();
         List<Bezit> bezit;
-        bezit = bezitten.stream().filter(bezitVanVragenlijst -> bezitVanVragenlijst.getVragenlijst().equals(gekozenVragenlijst)).collect(Collectors.toList());
+        bezit = bezitten.stream().filter(bezitVanVragenlijst -> bezitVanVragenlijst.getVragenlijst().getNaam().equals(this.vragenlijst.getNaam())).collect(Collectors.toList());
 
         PRINTER.printToScreen("Oude highscore: " + bezit.get(0).getHighscore() + " punten");
 
@@ -124,7 +125,7 @@ public class Kennisquiz {
     }
 
     public void slaAntwoordenOp(){
-        gegevenAntwoorden = new GegevenAntwoorden(aantalGoedeAntwoorden, speelTijd, antwoordenSpeler, gekozenVragenlijst);
+        gegevenAntwoorden = new GegevenAntwoorden(aantalGoedeAntwoorden, speelTijd, antwoordenSpeler, vragenlijst);
         this.speler.spelerAntwoorden.add(gegevenAntwoorden);
     }
 

@@ -11,9 +11,10 @@ public class Speler extends Account {
     public Speler(String gebruikersnaam, String wachtwoord, Taal taal) {
         super(gebruikersnaam, wachtwoord, taal);
         this.setMunten(100);
-        bezitten.add(new Bezit(0, java.time.LocalDate.now(), gebruikersnaam, "Formule 1"));
-        bezitten.add(new Bezit(0, java.time.LocalDate.now(), gebruikersnaam, "Honkbal"));
-        bezitten.add(new Bezit(0, java.time.LocalDate.now(), gebruikersnaam, "Algemeen"));
+
+        SpelInitialisatie si = new SpelInitialisatie();
+        ArrayList<Vragenlijst> vragenlijsten = si.getVragenlijsten();
+        vragenlijsten.forEach((vragenlijst) -> bezitten.add(new Bezit(0, java.time.LocalDate.now(), gebruikersnaam, vragenlijst)));
     }
 
     public ArrayList<GegevenAntwoorden> getSpelerAntwoorden() {

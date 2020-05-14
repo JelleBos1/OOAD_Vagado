@@ -25,9 +25,9 @@ public class SpelInitialisatie {
     public ArrayList<Vragenlijst> getVragenlijsten(){
         ArrayList<Vragenlijst> vragenlijsten = new ArrayList<>();
 
-        Vragenlijst vragenlijstSportFormule1 = new Vragenlijst("Sport", "Formule 1", 50);
-        Vragenlijst vragenlijstSportHonkbal = new Vragenlijst("Sport", "Honkbal", 50);
-        Vragenlijst vragenlijstMuziekAlgemeen = new Vragenlijst("Muziek", "Algemeen", 50);
+        Vragenlijst vragenlijstSportFormule1 = new Vragenlijst("Sport", "Sport - Formule 1", 50);
+        Vragenlijst vragenlijstSportHonkbal = new Vragenlijst("Sport", "Sport - Honkbal", 50);
+        Vragenlijst vragenlijstMuziekAlgemeen = new Vragenlijst("Muziek", "Muziek - Algemeen", 50);
 
         vragenlijsten.add(vragenlijstSportFormule1);
         vragenlijsten.add(vragenlijstSportHonkbal);
@@ -39,9 +39,9 @@ public class SpelInitialisatie {
     public ArrayList<Vraag> getVragen(){
 
         ArrayList<Vraag> vragen = new ArrayList<>();
-        Vragenlijst vragenlijstSportFormule1 = new Vragenlijst("Sport", "Formule 1", 50);
-        Vragenlijst vragenlijstSportHonkbal = new Vragenlijst("Sport", "Honkbal", 50);
-        Vragenlijst vragenlijstMuziekAlgemeen = new Vragenlijst("Muziek", "Algemeen", 50);
+        Vragenlijst vragenlijstSportFormule1 = new Vragenlijst("Sport", "Sport - Formule 1", 50);
+        Vragenlijst vragenlijstSportHonkbal = new Vragenlijst("Sport", "Sport - Honkbal", 50);
+        Vragenlijst vragenlijstMuziekAlgemeen = new Vragenlijst("Muziek", "Muziek - Algemeen", 50);
 
         ArrayList<String> vraag1Antwoorden = new ArrayList<>();
         vraag1Antwoorden.add("Michael Schumacher");
@@ -314,12 +314,16 @@ public class SpelInitialisatie {
         PRINTER.printToScreen("Je hebt gekozen voor " + gekozenVragenlijst);
     }
 
-    public void vulVragenPerVragenlijst(String vragenlijst){
-        gekozenVragen = getVragen().stream().filter(vraag -> vraag.getVragenlijst().getNaam().equals(vragenlijst)).collect(Collectors.toList());
+    public void vulVragenPerVragenlijst(Vragenlijst vragenlijst){
+        gekozenVragen = getVragen().stream().filter(vraag -> vraag.getVragenlijst().getNaam().equals(vragenlijst.getNaam())).collect(Collectors.toList());
 
         if (gekozenVragen.size() == 0){
             kiesVragenlijst();
         }
+    }
+
+    public List<Vraag> getGekozenVragen(){
+        return gekozenVragen;
     }
 
     public String getGekozenVragenlijst(){
