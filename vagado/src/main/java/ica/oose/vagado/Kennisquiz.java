@@ -63,42 +63,30 @@ public class Kennisquiz {
         AtomicInteger index = new AtomicInteger(1);
 
         List<Vraag> gekozenVragen = si.getGekozenVragen();
+
         vragenlijst.getRandomQuizVragen(gekozenVragen).forEach((vraag) -> {
             String antwoord;
-            if (vraag instanceof OpenVraag){
-                vraag.printVraag(index);
 
-                antwoord = INPUT.getInput();
-                if (vraag.controleerAntwoord(antwoord)){
-                    PRINTER.printToScreen(ANTWOORD_GOED_TEXT);
-                    PRINTER.printToScreen("\n");
-                    aantalGoedeAntwoorden++;
-                }
-                else {
-                    PRINTER.printToScreen(ANTWOORD_FOUT_TEXT);
-                    PRINTER.printToScreen("\n");
-                }
-                antwoordenSpeler.add(new Antwoord(vraag.getId(), antwoord));
-            }
+            vraag.printVraag(index);
 
             if (vraag instanceof MeerkeuzeVraag){
-                vraag.printVraag(index);
                 ((MeerkeuzeVraag) vraag).printMogelijkeAntwoorden();
-
-                antwoord = INPUT.getInput();
-                if (vraag.controleerAntwoord(antwoord)){
-                    PRINTER.printToScreen(ANTWOORD_GOED_TEXT);
-                    PRINTER.printToScreen("\n");
-                    aantalGoedeAntwoorden++;
-                }
-                else {
-                    PRINTER.printToScreen(ANTWOORD_FOUT_TEXT);
-                    PRINTER.printToScreen("\n");
-                }
-
-                antwoordenSpeler.add(new Antwoord(vraag.getId(), antwoord));
             }
+
+            antwoord = INPUT.getInput();
+            if (vraag.controleerAntwoord(antwoord)){
+                PRINTER.printToScreen(ANTWOORD_GOED_TEXT);
+                PRINTER.printToScreen("\n");
+                aantalGoedeAntwoorden++;
+            }
+            else {
+                PRINTER.printToScreen(ANTWOORD_FOUT_TEXT);
+                PRINTER.printToScreen("\n");
+            }
+            antwoordenSpeler.add(new Antwoord(vraag.getId(), antwoord));
+
             index.getAndIncrement();
+
         });
         timer.stop();
     }
