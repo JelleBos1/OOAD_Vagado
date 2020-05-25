@@ -26,10 +26,6 @@ public class Vragenlijst {
         return naam;
     }
 
-    public Thema getThema() {
-        return thema;
-    }
-
     public ArrayList<Vraag> getRandomQuizVragen(List<Vraag> gekozenVragen){
 
         ArrayList<Vraag> vragen = new ArrayList<>();

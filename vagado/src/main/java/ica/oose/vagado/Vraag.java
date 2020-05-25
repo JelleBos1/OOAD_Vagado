@@ -2,7 +2,7 @@ package ica.oose.vagado;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static ica.oose.vagado.Kennisquiz.PRINTER;
+import static ica.oose.vagado.Vagado.PRINTER;
 
 public abstract class Vraag {
 

@@ -3,7 +3,7 @@ package ica.oose.vagado;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import static ica.oose.vagado.Kennisquiz.PRINTER;
+import static ica.oose.vagado.Vagado.PRINTER;
 
 public class MeerkeuzeVraag extends Vraag {
 

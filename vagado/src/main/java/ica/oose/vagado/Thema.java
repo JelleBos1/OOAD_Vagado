@@ -8,8 +8,4 @@ public class Thema {
         this.naam = naam;
     }
 
-    public String getNaam() {
-        return naam;
-    }
-
 }

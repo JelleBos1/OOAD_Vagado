@@ -6,8 +6,12 @@ package ica.oose.vagado;
  */
 public class Vagado
 {
+    protected final static IPrinter PRINTER = new PrinterConsole();
+    protected final static IInput INPUT = new InputScanner();
+
     public static void main( String[] args )
     {
+
         Speler speler = new Speler("Speler 1", "wachtwoord", new Taal("Nederlands"));
         IPuntentelling puntentelling = new PuntentellingVagado();
 

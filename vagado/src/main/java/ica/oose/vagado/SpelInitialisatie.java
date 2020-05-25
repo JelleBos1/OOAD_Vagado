@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static ica.oose.vagado.Kennisquiz.*;
+import static ica.oose.vagado.Vagado.PRINTER;
 
 public class SpelInitialisatie {
 
