@@ -20,7 +20,7 @@ public class Vagado
         Vragenlijst vragenlijstHonkbal = new Vragenlijst("Sport - Honkbal");
         Vragenlijst vragenlijstMuziek = new Vragenlijst("Muziek - Algemeen");
 
-        Kennisquiz kennisquiz = new Kennisquiz(speler, puntentelling, vragenlijstHonkbal);
+        Kennisquiz kennisquiz = new Kennisquiz(speler, puntentelling, vragenlijstFormule1);
         kennisquiz.speelSpel();
     }
 }

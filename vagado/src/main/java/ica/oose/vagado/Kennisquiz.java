@@ -26,7 +26,7 @@ public class Kennisquiz {
     private Vragenlijst vragenlijst;
 
     private StopWatch timer = new StopWatch();
-    private SpelInitialisatie si = new SpelInitialisatie();
+    private IQuizData quizData = new QuizData();
 
     public Kennisquiz(Speler speler, IPuntentelling puntentelling, Vragenlijst vragenlijst) {
         this.speler = speler;
@@ -54,14 +54,12 @@ public class Kennisquiz {
 
     public void speelVragen(Vragenlijst vragenlijst){
 
-        si.vulVragenPerVragenlijst(vragenlijst);
-
         timer.start();
 
         //Normale integer werkt niet binnen een Lambda expressie
         AtomicInteger index = new AtomicInteger(1);
 
-        List<Vraag> gekozenVragen = si.getGekozenVragen();
+        List<Vraag> gekozenVragen = quizData.filterVragen(vragenlijst);
 
         vragenlijst.getRandomQuizVragen(gekozenVragen).forEach((vraag) -> {
             String antwoord;

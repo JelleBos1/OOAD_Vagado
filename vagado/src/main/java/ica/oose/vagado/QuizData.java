@@ -6,9 +6,7 @@ import java.util.stream.Collectors;
 
 import static ica.oose.vagado.Vagado.PRINTER;
 
-public class SpelInitialisatie {
-
-    private List<Vraag> gekozenVragen;
+public class QuizData implements IQuizData {
 
     Thema sport = new Thema("Sport");
     Thema muziek = new Thema("Muziek");
@@ -277,17 +275,13 @@ public class SpelInitialisatie {
         return vragen;
     }
 
-    public void vulVragenPerVragenlijst(Vragenlijst vragenlijst){
-        gekozenVragen = getVragen().stream().filter(vraag -> vraag.getVragenlijst().getNaam().equals(vragenlijst.getNaam())).collect(Collectors.toList());
+    public List<Vraag> filterVragen(Vragenlijst vragenlijst){
+        List<Vraag> gekozenVragen = getVragen().stream().filter(vraag -> vraag.getVragenlijst().getNaam().equals(vragenlijst.getNaam())).collect(Collectors.toList());
 
         if (gekozenVragen.size() == 0){
             PRINTER.printToScreen("Vragenlijst niet gevonden. Start de quiz opnieuw met een bestaande vragenlijst.");
             throw new Error("Vragenlijst niet gevonden");
         }
-    }
-
-    public List<Vraag> getGekozenVragen(){
         return gekozenVragen;
     }
-
 }

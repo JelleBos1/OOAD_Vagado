@@ -18,8 +18,8 @@ public class Speler extends Account {
 
         //Instantie aanmaken naar SpelInitialisatie om alle vragenlijsten op te halen en als bezit aan een Speler toe te voegen.
         //Niet opgenomen in DCD omdat het gaat om het aanmaken van data
-        SpelInitialisatie si = new SpelInitialisatie();
-        ArrayList<Vragenlijst> vragenlijsten = si.getVragenlijsten();
+        QuizData quizData = new QuizData();
+        ArrayList<Vragenlijst> vragenlijsten = quizData.getVragenlijsten();
         vragenlijsten.forEach((vragenlijst) -> bezitten.add(new Bezit(0, java.time.LocalDate.now(), gebruikersnaam, vragenlijst)));
     }
 
