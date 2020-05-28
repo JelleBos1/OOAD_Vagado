@@ -4,7 +4,6 @@ import org.apache.commons.lang3.time.StopWatch;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Collectors;
 
 import static ica.oose.vagado.Vagado.INPUT;
 import static ica.oose.vagado.Vagado.PRINTER;
@@ -49,7 +48,7 @@ public class Kennisquiz {
         PRINTER.printToScreen("Je hebt er " + speelTijd + " seconden over gedaan.");
         PRINTER.printToScreen("De behaalde score is " + puntentelling.berekenScore(aantalGoedeAntwoorden, speelTijd) + " punten");
         verhoogMunten(aantalGoedeAntwoorden);
-        setHighScore(puntentelling.berekenScore(aantalGoedeAntwoorden, speelTijd));
+        speler.setHighScore(puntentelling.berekenScore(aantalGoedeAntwoorden, speelTijd), vragenlijst);
         slaAntwoordenOp();
     }
 
@@ -89,20 +88,6 @@ public class Kennisquiz {
 
         });
         timer.stop();
-    }
-
-    public void setHighScore(int behaaldeScore){
-        ArrayList<Bezit> bezitten = speler.getBezitten();
-        List<Bezit> bezit;
-        bezit = bezitten.stream().filter(bezitVanVragenlijst -> bezitVanVragenlijst.getVragenlijst().getNaam().equals(vragenlijst.getNaam())).collect(Collectors.toList());
-
-        PRINTER.printToScreen("Oude highscore: " + bezit.get(0).getHighscore() + " punten");
-
-        if (behaaldeScore > bezit.get(0).getHighscore()){
-            bezit.get(0).setHighscore(behaaldeScore);
-            PRINTER.printToScreen("Gefeliciteerd, je hebt een nieuwe highscore behaald voor de vragenlijst " + vragenlijst.getNaam());
-            PRINTER.printToScreen("Nieuwe highscore: " + behaaldeScore + " punten");
-        };
     }
 
     public void slaAntwoordenOp(){
