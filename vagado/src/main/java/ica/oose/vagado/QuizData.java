@@ -276,12 +276,12 @@ public class QuizData implements IQuizData {
     }
 
     public List<Vraag> filterVragen(Vragenlijst vragenlijst){
-        List<Vraag> gekozenVragen = getVragen().stream().filter(vraag -> vraag.getVragenlijst().getNaam().equals(vragenlijst.getNaam())).collect(Collectors.toList());
+        List<Vraag> vragen = getVragen().stream().filter(vraag -> vraag.getVragenlijst().getNaam().equals(vragenlijst.getNaam())).collect(Collectors.toList());
 
-        if (gekozenVragen.size() == 0){
+        if (vragen.size() == 0){
             PRINTER.printToScreen("Vragenlijst niet gevonden. Start de quiz opnieuw met een bestaande vragenlijst.");
             throw new Error("Vragenlijst niet gevonden");
         }
-        return gekozenVragen;
+        return vragen;
     }
 }

@@ -46,20 +46,20 @@ public class Kennisquiz {
 
         speelTijd = ((double)timer.getTime() / 1000);
         PRINTER.printToScreen("Je hebt er " + speelTijd + " seconden over gedaan.");
-        PRINTER.printToScreen("De behaalde score is " + puntentelling.berekenScore(aantalGoedeAntwoorden, speelTijd) + " punten");
+        int score = puntentelling.berekenScore(aantalGoedeAntwoorden, speelTijd);
+        PRINTER.printToScreen("De behaalde score is " + score + " punten");
         verhoogMunten(aantalGoedeAntwoorden);
-        speler.setHighScore(puntentelling.berekenScore(aantalGoedeAntwoorden, speelTijd), vragenlijst);
+        speler.setHighScore(score, vragenlijst);
         slaAntwoordenOp();
     }
 
     public void speelVragen(Vragenlijst vragenlijst){
 
+        List<Vraag> gekozenVragen = quizData.filterVragen(vragenlijst);
         timer.start();
 
         //Normale integer werkt niet binnen een Lambda expressie
         AtomicInteger index = new AtomicInteger(1);
-
-        List<Vraag> gekozenVragen = quizData.filterVragen(vragenlijst);
 
         vragenlijst.getRandomQuizVragen(gekozenVragen).forEach((vraag) -> {
             String antwoord;

@@ -11,10 +11,11 @@ public class Speler extends Account {
     private int munten;
     private ArrayList<Bezit> bezitten = new ArrayList<>();
     protected ArrayList<GegevenAntwoorden> spelerAntwoorden = new ArrayList<>();
+    static final int START_SALDO = 100;
 
     public Speler(String gebruikersnaam, String wachtwoord, Taal taal) {
         super(gebruikersnaam, wachtwoord, taal);
-        this.setMunten(100);
+        this.setMunten(START_SALDO);
 
         //Instantie aanmaken naar SpelInitialisatie om alle vragenlijsten op te halen en als bezit aan een Speler toe te voegen.
         //Niet opgenomen in DCD omdat het gaat om het aanmaken van data
