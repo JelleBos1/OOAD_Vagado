@@ -21,7 +21,7 @@ public class Speler extends Account {
         //Niet opgenomen in DCD omdat het gaat om het aanmaken van data
         QuizData quizData = new QuizData();
         ArrayList<Vragenlijst> vragenlijsten = quizData.getVragenlijsten();
-        vragenlijsten.forEach((vragenlijst) -> bezitten.add(new Bezit(0, java.time.LocalDate.now(), gebruikersnaam, vragenlijst)));
+        vragenlijsten.forEach((vragenlijst) -> bezitten.add(new Bezit(0, java.time.LocalDate.now(), vragenlijst)));
     }
 
     public int getMunten() {

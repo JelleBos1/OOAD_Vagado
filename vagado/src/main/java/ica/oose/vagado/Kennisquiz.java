@@ -28,13 +28,11 @@ public class Kennisquiz {
     private StopWatch timer = new StopWatch();
     private IQuizData quizData = new QuizData();
 
-    public Kennisquiz(Speler speler, IPuntentelling puntentelling, Vragenlijst vragenlijst) {
+    public void speelSpel(Speler speler, IPuntentelling puntentelling, Vragenlijst vragenlijst){
+
         this.speler = speler;
         this.puntentelling = puntentelling;
         this.vragenlijst = vragenlijst;
-    }
-
-    public void speelSpel(){
 
         PRINTER.printToScreen("Welkom bij Vagado " + speler.getGebruikersnaam());
         PRINTER.printHeaderToScreen("DE QUIZ START NU");
