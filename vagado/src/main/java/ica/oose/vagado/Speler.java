@@ -17,7 +17,7 @@ public class Speler extends Account {
         super(gebruikersnaam, wachtwoord, taal);
         this.setMunten(START_SALDO);
 
-        //Instantie aanmaken naar SpelInitialisatie om alle vragenlijsten op te halen en als bezit aan een Speler toe te voegen.
+        //Instantie aanmaken naar QuizDate om alle vragenlijsten op te halen en als bezit aan een Speler toe te voegen.
         //Niet opgenomen in DCD omdat het gaat om het aanmaken van data
         QuizData quizData = new QuizData();
         ArrayList<Vragenlijst> vragenlijsten = quizData.getVragenlijsten();

@@ -1,9 +1,5 @@
 package ica.oose.vagado;
 
-/**
- * Vagado
- *
- */
 public class Vagado
 {
     protected final static IPrinter PRINTER = new PrinterConsole();
@@ -12,15 +8,15 @@ public class Vagado
     public static void main( String[] args )
     {
 
-        Speler speler = new Speler("Speler 1", "wachtwoord", new Taal("Nederlands"));
+        Speler speler = new Speler("speler1@vagado.nl", "wachtwoord", new Taal("Nederlands"));
         IPuntentelling puntentelling = new PuntentellingVagado();
 
-        //De drie geimplementeerde vragenlijsten. Om een andere vragenlijst te spelen, verander simpelweg de vragenlijst in de constructor van Kennisquiz
+        //De drie geimplementeerde vragenlijsten. Om een andere vragenlijst te spelen, verander simpelweg de vragenlijst bij het aanroepen van speelSpel()
         Vragenlijst vragenlijstFormule1 = new Vragenlijst("Sport - Formule 1");
         Vragenlijst vragenlijstHonkbal = new Vragenlijst("Sport - Honkbal");
         Vragenlijst vragenlijstMuziek = new Vragenlijst("Muziek - Algemeen");
 
         Kennisquiz kennisquiz = new Kennisquiz();
-        kennisquiz.speelSpel(speler, puntentelling, vragenlijstMuziek);
+        kennisquiz.speelSpel(speler, puntentelling, vragenlijstFormule1);
     }
 }
